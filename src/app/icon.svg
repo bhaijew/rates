@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eedbb9" />
+      <stop offset="30%" stop-color="#c5a059" />
+      <stop offset="70%" stop-color="#9c8254" />
+      <stop offset="100%" stop-color="#73582a" />
+    </linearGradient>
+    <linearGradient id="goldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eedbb9" />
+      <stop offset="50%" stop-color="#dfcca6" />
+      <stop offset="100%" stop-color="#caa771" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12" flood-color="#73582a" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Badge with luxury 5px proportion -->
+  <rect x="4" y="4" width="92" height="92" rx="16" fill="#ffffff" stroke="url(#goldBorder)" stroke-width="4.5" />
+  <rect x="10" y="10" width="80" height="80" rx="11" fill="#fdfbf7" />
+
+  <!-- B Letter Monogram -->
+  <path d="M 26 22 H 48 C 59 22 68 26.5 68 36 C 68 43 62 47.5 53 49 C 63 51 72 56 72 65.5 C 72 75 62 80 49 80 H 26 V 73.5 H 32 V 28.5 H 26 Z M 39 29.5 V 45.5 H 47.5 C 54.5 45.5 59.5 42 59.5 37.5 C 59.5 33 54.5 29.5 47.5 29.5 Z M 39 52 V 72.5 H 48.5 C 56.5 72.5 63 68 63 62.5 C 63 56.5 56.5 52 48.5 52 Z" fill="url(#goldB)" fill-rule="evenodd" filter="url(#shadow)" />
+</svg>
