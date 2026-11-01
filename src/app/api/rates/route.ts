@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { DEFAULT_RATES, calculateGoldSilverRatio } from "@/lib/rates";
 
-export const dynamic = "force-dynamic";
-
 const API_KEY = process.env.GOLD_API_KEY || "goldapi-7a9752a57eb151a0a449a7f057f7265c-io";
 
 // Smart In-Memory Cache (15 minutes = 900,000 ms) to conserve free tier quota
