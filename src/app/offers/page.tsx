@@ -261,7 +261,7 @@ export default function OffersPage() {
   }, []);
 
   // WhatsApp click handler with pre-populated message
-  const whatsappUrl = `https://wa.me/447385325805?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/447735727897?text=${encodeURIComponent(
     `Hello Shaandar / Bhai Jewellers, I would like to inquire/buy: ${currentOffer.title} (${currentOffer.price}, Ref: ${currentOffer.id}).`
   )}`;
 

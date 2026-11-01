@@ -205,7 +205,7 @@ export default function Header() {
           {/* Right: Contact CTA */}
           <div className="flex items-center gap-2">
             <a
-              href="https://wa.me/923001234567"
+              href="https://wa.me/447735727897"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs sm:text-sm font-semibold px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-[5px] bg-black hover:bg-[#9c8254] text-white transition-colors duration-200 shadow-xs whitespace-nowrap"
@@ -355,7 +355,7 @@ export default function Header() {
           </div>
 
           <a
-            href="https://wa.me/923001234567"
+            href="https://wa.me/447735727897"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#1ebe5b] hover:from-[#20ba59] hover:to-[#17a84e] text-white py-2.5 rounded-[6px] text-xs font-bold shadow-xs transition-all active:scale-95"

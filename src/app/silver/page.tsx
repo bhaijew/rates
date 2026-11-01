@@ -190,7 +190,7 @@ export default function SilverPage() {
                 {/* WhatsApp Order Button */}
                 <div className="mt-2.5 sm:mt-4 pt-1">
                   <a
-                    href={`https://wa.me/923001234567?text=${waText}`}
+                    href={`https://wa.me/447735727897?text=${waText}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center gap-1.5 py-1.5 sm:py-2.5 px-2 sm:px-4 rounded-[4px] sm:rounded-[5px] bg-slate-50 hover:bg-slate-900 text-slate-800 hover:text-white border border-slate-200 text-[10px] sm:text-xs font-bold transition-all duration-200 shadow-2xs active:scale-95 group-hover:bg-slate-900 group-hover:text-white"
