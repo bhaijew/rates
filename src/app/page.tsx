@@ -16,6 +16,7 @@ export default function Home() {
   const [rates, setRates] = useState(DEFAULT_RATES);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState(formatUKDateTime());
+  const [heroBg, setHeroBg] = useState<"jewelry" | "gold">("jewelry");
 
   // Interactive Calculator State
   const [calcMetal, setCalcMetal] = useState<"gold" | "silver">("gold");
@@ -65,86 +66,133 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8f5]/40 font-sans text-slate-800 pb-20">
+    <div className="min-h-screen bg-[#0c0a07] font-sans text-slate-800 pb-20 relative overflow-x-hidden">
       
-      {/* Background Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-80 bg-gradient-to-b from-[#f5ede0]/50 via-transparent to-transparent pointer-events-none -z-10" />
+      {/* Dynamic Luxury Background Image: Fine Jewellery or Gold Bullion */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center transition-all duration-700 ease-in-out pointer-events-none scale-105"
+        style={{ 
+          backgroundImage: `url(${heroBg === "jewelry" ? "'/images/luxury-gold-jewelry.jpg'" : "'/images/gold-bars-bg.jpg'"})`,
+          opacity: 0.22,
+        }}
+      />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12">
+      {/* Multi-layered Deep Luxury Gradients for Maximum Legibility & Atmospheric Glow */}
+      <div className="fixed inset-0 bg-gradient-to-b from-[#0c0a07]/95 via-[#16120b]/90 to-[#0c0a07]/98 pointer-events-none" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#dfcca6]/18 via-transparent to-transparent pointer-events-none" />
+
+      {/* Top Gold Foil Accent Bar */}
+      <div className="w-full h-1 bg-gradient-to-r from-transparent via-[#dfcca6] to-transparent relative z-10 opacity-70" />
+
+      <main className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10">
         
-        {/* Page Header */}
-        <div className="border-b border-[#dfcca6]/50 pb-5 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
+        {/* Page Header with Badge & Background Theme Switcher */}
+        <div className="border-b border-[#dfcca6]/30 pb-5">
+          {/* Top Bar: Desk Tag + Toggle Jewellery / Bullion */}
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-2.5">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold text-[#8b6914] tracking-widest uppercase bg-[#f7f2e7] px-2 py-0.5 rounded-[4px] border border-[#dfcca6]/60">
+              <span className="text-[10.5px] sm:text-[11px] font-bold text-[#dfcca6] tracking-widest uppercase bg-[#22180d]/90 px-2.5 py-1 rounded-[4px] border border-[#dfcca6]/50 shadow-xs flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#dfcca6] animate-pulse" />
                 UK London Bullion Desk
               </span>
-              <span className="text-xs text-slate-400 font-medium">· London Fixings</span>
+              <span className="text-xs text-stone-300 font-medium">· London Fixings</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 mt-1.5">
-              Live Gold & Silver Rates (GBP)
-            </h1>
-
-            <div className="flex items-center gap-2 mt-1.5">
-              {/* Radar Live Indicator */}
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <p className="text-xs text-slate-500 font-medium">
-                Updated {lastUpdatedDisplay}
-              </p>
+            {/* Background Theme Switcher: Jewellery / Gold Bullion */}
+            <div className="inline-flex items-center p-0.5 rounded-[5px] bg-black/60 border border-[#dfcca6]/40 backdrop-blur-xs text-[11px]">
               <button
-                onClick={fetchRates}
-                disabled={isRefreshing}
-                title="Refresh Live London Rates"
-                className="p-1 text-slate-400 hover:text-[#9c8254] transition-all rounded hover:bg-[#faf8f5] active:scale-90"
+                type="button"
+                onClick={() => setHeroBg("jewelry")}
+                className={`px-2.5 py-1 rounded-[3px] font-semibold transition-all cursor-pointer ${
+                  heroBg === "jewelry"
+                    ? "bg-[#8b6914] text-white shadow-xs"
+                    : "text-stone-300 hover:text-white"
+                }`}
+                title="Switch background to Fine Jewellery"
               >
-                <svg
-                  className={`w-3.5 h-3.5 transition-transform duration-500 ${isRefreshing ? "animate-spin text-[#9c8254]" : ""}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
+                💎 Jewellery
+              </button>
+              <button
+                type="button"
+                onClick={() => setHeroBg("gold")}
+                className={`px-2.5 py-1 rounded-[3px] font-semibold transition-all cursor-pointer ${
+                  heroBg === "gold"
+                    ? "bg-[#8b6914] text-white shadow-xs"
+                    : "text-stone-300 hover:text-white"
+                }`}
+                title="Switch background to Gold Bullion"
+              >
+                🪙 Gold Bullion
               </button>
             </div>
           </div>
 
-          {/* Segmented View Pill: Current View | Interactive View | Overview */}
-          <div className="inline-flex items-center p-1 bg-white border border-[#dfcca6] rounded-[6px] shadow-xs self-start sm:self-auto">
-            <button
-              onClick={() => setActiveView("current")}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
-                activeView === "current"
-                  ? "bg-[#8b6914] text-white shadow-xs scale-100"
-                  : "text-[#8b6914] hover:text-[#6e520d] hover:bg-[#faf8f5]"
-              }`}
-            >
-              Current View
-            </button>
-            <button
-              onClick={() => setActiveView("interactive")}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
-                activeView === "interactive"
-                  ? "bg-[#8b6914] text-white shadow-xs scale-100"
-                  : "text-[#8b6914] hover:text-[#6e520d] hover:bg-[#faf8f5]"
-              }`}
-            >
-              Interactive View
-            </button>
-            <button
-              onClick={() => setActiveView("overview")}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
-                activeView === "overview"
-                  ? "bg-[#8b6914] text-white shadow-xs scale-100"
-                  : "text-[#8b6914] hover:text-[#6e520d] hover:bg-[#faf8f5]"
-              }`}
-            >
-              Overview
-            </button>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mt-1">
+                Live Gold & Silver Rates <span className="text-[#dfcca6]">(GBP)</span>
+              </h1>
+
+              <div className="flex items-center gap-2 mt-2">
+                {/* Radar Live Indicator */}
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                <p className="text-xs text-stone-300 font-medium">
+                  Updated {lastUpdatedDisplay}
+                </p>
+                <button
+                  onClick={fetchRates}
+                  disabled={isRefreshing}
+                  title="Refresh Live London Rates"
+                  className="p-1 text-[#dfcca6] hover:text-white transition-all rounded hover:bg-white/10 active:scale-90"
+                >
+                  <svg
+                    className={`w-3.5 h-3.5 transition-transform duration-500 ${isRefreshing ? "animate-spin text-[#dfcca6]" : ""}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Segmented View Pill: Current View | Interactive View | Overview */}
+            <div className="inline-flex items-center p-1 bg-black/50 border border-[#dfcca6]/50 rounded-[6px] shadow-xs self-start sm:self-auto backdrop-blur-xs">
+              <button
+                onClick={() => setActiveView("current")}
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
+                  activeView === "current"
+                    ? "bg-[#8b6914] text-white shadow-xs scale-100"
+                    : "text-[#dfcca6] hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Current View
+              </button>
+              <button
+                onClick={() => setActiveView("interactive")}
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
+                  activeView === "interactive"
+                    ? "bg-[#8b6914] text-white shadow-xs scale-100"
+                    : "text-[#dfcca6] hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Interactive View
+              </button>
+              <button
+                onClick={() => setActiveView("overview")}
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
+                  activeView === "overview"
+                    ? "bg-[#8b6914] text-white shadow-xs scale-100"
+                    : "text-[#dfcca6] hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Overview
+              </button>
+            </div>
           </div>
         </div>
 
@@ -237,6 +285,14 @@ export default function Home() {
                     </span>
                   </div>
                 </div>
+
+                {/* Subtle Gold Ingot Watermark */}
+                <div className="absolute -right-4 -bottom-4 w-28 h-28 opacity-[0.035] pointer-events-none select-none text-[#9c8254]">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                    <path d="M4 18h16l2-8H2l2 8zm1-10h14l1-4H4l1 4z" />
+                    <path d="M3 19h18v2H3v-2z" />
+                  </svg>
+                </div>
               </div>
 
               {/* SILVER CARD */}
@@ -322,6 +378,14 @@ export default function Home() {
                       {formatGBP(silverGram * WEIGHT_CONVERSIONS.troyOunce)}
                     </span>
                   </div>
+                </div>
+
+                {/* Subtle Silver Coin Watermark */}
+                <div className="absolute -right-4 -bottom-4 w-28 h-28 opacity-[0.035] pointer-events-none select-none text-slate-700">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-full h-full">
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="12" r="6" strokeDasharray="3 3" />
+                  </svg>
                 </div>
               </div>
 
@@ -618,9 +682,9 @@ export default function Home() {
         )}
 
         {/* Disclaimer Note */}
-        <div className="mt-8 p-4 rounded-[6px] bg-[#faf8f5]/80 border border-[#dfcca6]/60 text-xs text-slate-600 leading-relaxed shadow-2xs">
+        <div className="mt-8 p-4 rounded-[6px] bg-[#1a140d]/85 border border-[#dfcca6]/40 text-xs text-stone-300 leading-relaxed shadow-sm">
           <p>
-            London spot market prices update in real time. Final physical buying and selling prices are subject to showroom verification and trade locking by <strong className="text-slate-900 font-semibold">Bhai Jeweller</strong>.
+            London spot market prices update in real time. Final physical buying and selling prices are subject to showroom verification and trade locking by <strong className="text-[#dfcca6] font-semibold">Bhai Jeweller</strong>.
           </p>
         </div>
 

@@ -49,12 +49,26 @@ export default function Header() {
     {
       label: "Gold Bars / Coins",
       href: "/gold-bars",
+      badge: "24K Gold",
+      badgeColor: "gold",
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <circle cx="8" cy="8" r="6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M18.09 10.37A6 6 0 1 1 10.34 18" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M7 6h1v4" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="m16.71 13.88.7.71-2.82 2.82" />
+        </svg>
+      ),
+    },
+    {
+      label: "Silver Bars / Coins",
+      href: "/silver",
+      badge: "999 Silver",
+      badgeColor: "silver",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
         </svg>
       ),
     },
@@ -77,16 +91,6 @@ export default function Header() {
           <rect x="2" y="6" width="20" height="12" rx="2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           <circle cx="12" cy="12" r="2.5" strokeWidth="1.8" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M6 12h.01M18 12h.01" />
-        </svg>
-      ),
-    },
-    {
-      label: "Silver Bars / Coins",
-      href: "/silver",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
         </svg>
       ),
     },
@@ -271,6 +275,21 @@ export default function Header() {
 
                 {/* Item Label */}
                 <span className="flex-1 text-[13.5px]">{item.label}</span>
+
+                {/* Badge if present */}
+                {"badge" in item && item.badge && (
+                  <span
+                    className={`text-[10px] font-bold px-1.5 py-0.5 rounded-[3px] uppercase tracking-wider shrink-0 ${
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : item.badgeColor === "gold"
+                        ? "bg-[#faf3e3] text-[#8b6914] border border-[#dfcca6]/60"
+                        : "bg-slate-100 text-slate-600 border border-slate-200"
+                    }`}
+                  >
+                    {item.badge}
+                  </span>
+                )}
               </Link>
             );
           })}
