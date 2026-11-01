@@ -66,47 +66,47 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0c0a07] font-sans text-slate-800 pb-20 relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#faf8f5] font-sans text-slate-800 pb-20 relative overflow-x-hidden">
       
-      {/* Dynamic Luxury Background Image: Fine Jewellery or Gold Bullion */}
+      {/* Light Warm Luxury Background Image: Fine Jewellery or Gold Bullion */}
       <div 
         className="fixed inset-0 bg-cover bg-center transition-all duration-700 ease-in-out pointer-events-none scale-105"
         style={{ 
           backgroundImage: `url(${heroBg === "jewelry" ? "'/images/luxury-gold-jewelry.jpg'" : "'/images/gold-bars-bg.jpg'"})`,
-          opacity: 0.22,
+          opacity: 0.13,
         }}
       />
 
-      {/* Multi-layered Deep Luxury Gradients for Maximum Legibility & Atmospheric Glow */}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#0c0a07]/95 via-[#16120b]/90 to-[#0c0a07]/98 pointer-events-none" />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#dfcca6]/18 via-transparent to-transparent pointer-events-none" />
+      {/* Warm Ambient Pearl Gradients for Light Royal Jewellery Aesthetic */}
+      <div className="fixed inset-0 bg-gradient-to-b from-[#faf8f5]/90 via-[#fdfbf7]/75 to-[#faf8f5]/95 pointer-events-none" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#dfcca6]/35 via-transparent to-transparent pointer-events-none" />
 
-      {/* Top Gold Foil Accent Bar */}
-      <div className="w-full h-1 bg-gradient-to-r from-transparent via-[#dfcca6] to-transparent relative z-10 opacity-70" />
+      {/* Top Gold Metallic Accent Bar */}
+      <div className="w-full h-1 bg-gradient-to-r from-transparent via-[#caa771] to-transparent relative z-10 opacity-80" />
 
       <main className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10">
         
         {/* Page Header with Badge & Background Theme Switcher */}
-        <div className="border-b border-[#dfcca6]/30 pb-5">
+        <div className="border-b border-[#dfcca6]/70 pb-5">
           {/* Top Bar: Desk Tag + Toggle Jewellery / Bullion */}
           <div className="flex flex-wrap items-center justify-between gap-3 mb-2.5">
             <div className="flex items-center gap-2">
-              <span className="text-[10.5px] sm:text-[11px] font-bold text-[#dfcca6] tracking-widest uppercase bg-[#22180d]/90 px-2.5 py-1 rounded-[4px] border border-[#dfcca6]/50 shadow-xs flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#dfcca6] animate-pulse" />
+              <span className="text-[10.5px] sm:text-[11px] font-bold text-[#8b6914] tracking-widest uppercase bg-[#faf5ea] px-2.5 py-1 rounded-[4px] border border-[#dfcca6] shadow-2xs flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 UK London Bullion Desk
               </span>
-              <span className="text-xs text-stone-300 font-medium">· London Fixings</span>
+              <span className="text-xs text-slate-500 font-medium">· London Fixings</span>
             </div>
 
             {/* Background Theme Switcher: Jewellery / Gold Bullion */}
-            <div className="inline-flex items-center p-0.5 rounded-[5px] bg-black/60 border border-[#dfcca6]/40 backdrop-blur-xs text-[11px]">
+            <div className="inline-flex items-center p-0.5 rounded-[5px] bg-white border border-[#dfcca6] shadow-2xs text-[11px]">
               <button
                 type="button"
                 onClick={() => setHeroBg("jewelry")}
                 className={`px-2.5 py-1 rounded-[3px] font-semibold transition-all cursor-pointer ${
                   heroBg === "jewelry"
                     ? "bg-[#8b6914] text-white shadow-xs"
-                    : "text-stone-300 hover:text-white"
+                    : "text-[#8b6914] hover:bg-[#faf5ea]"
                 }`}
                 title="Switch background to Fine Jewellery"
               >
@@ -118,7 +118,7 @@ export default function Home() {
                 className={`px-2.5 py-1 rounded-[3px] font-semibold transition-all cursor-pointer ${
                   heroBg === "gold"
                     ? "bg-[#8b6914] text-white shadow-xs"
-                    : "text-stone-300 hover:text-white"
+                    : "text-[#8b6914] hover:bg-[#faf5ea]"
                 }`}
                 title="Switch background to Gold Bullion"
               >
@@ -129,8 +129,8 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mt-1">
-                Live Gold & Silver Rates <span className="text-[#dfcca6]">(GBP)</span>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 mt-1">
+                Live Gold & Silver Rates <span className="text-[#8b6914]">(GBP)</span>
               </h1>
 
               <div className="flex items-center gap-2 mt-2">
@@ -139,17 +139,17 @@ export default function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <p className="text-xs text-stone-300 font-medium">
+                <p className="text-xs text-slate-600 font-medium">
                   Updated {lastUpdatedDisplay}
                 </p>
                 <button
                   onClick={fetchRates}
                   disabled={isRefreshing}
                   title="Refresh Live London Rates"
-                  className="p-1 text-[#dfcca6] hover:text-white transition-all rounded hover:bg-white/10 active:scale-90"
+                  className="p-1 text-slate-400 hover:text-[#8b6914] transition-all rounded hover:bg-[#faf5ea] active:scale-90"
                 >
                   <svg
-                    className={`w-3.5 h-3.5 transition-transform duration-500 ${isRefreshing ? "animate-spin text-[#dfcca6]" : ""}`}
+                    className={`w-3.5 h-3.5 transition-transform duration-500 ${isRefreshing ? "animate-spin text-[#8b6914]" : ""}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -161,13 +161,13 @@ export default function Home() {
             </div>
 
             {/* Segmented View Pill: Current View | Interactive View | Overview */}
-            <div className="inline-flex items-center p-1 bg-black/50 border border-[#dfcca6]/50 rounded-[6px] shadow-xs self-start sm:self-auto backdrop-blur-xs">
+            <div className="inline-flex items-center p-1 bg-white border border-[#dfcca6] rounded-[6px] shadow-xs self-start sm:self-auto">
               <button
                 onClick={() => setActiveView("current")}
                 className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
                   activeView === "current"
                     ? "bg-[#8b6914] text-white shadow-xs scale-100"
-                    : "text-[#dfcca6] hover:text-white hover:bg-white/10"
+                    : "text-[#8b6914] hover:text-[#6e520d] hover:bg-[#faf5ea]"
                 }`}
               >
                 Current View
@@ -177,7 +177,7 @@ export default function Home() {
                 className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
                   activeView === "interactive"
                     ? "bg-[#8b6914] text-white shadow-xs scale-100"
-                    : "text-[#dfcca6] hover:text-white hover:bg-white/10"
+                    : "text-[#8b6914] hover:text-[#6e520d] hover:bg-[#faf5ea]"
                 }`}
               >
                 Interactive View
@@ -187,7 +187,7 @@ export default function Home() {
                 className={`px-3.5 py-1.5 text-xs font-semibold rounded-[4px] transition-all duration-200 cursor-pointer ${
                   activeView === "overview"
                     ? "bg-[#8b6914] text-white shadow-xs scale-100"
-                    : "text-[#dfcca6] hover:text-white hover:bg-white/10"
+                    : "text-[#8b6914] hover:text-[#6e520d] hover:bg-[#faf5ea]"
                 }`}
               >
                 Overview
@@ -682,9 +682,9 @@ export default function Home() {
         )}
 
         {/* Disclaimer Note */}
-        <div className="mt-8 p-4 rounded-[6px] bg-[#1a140d]/85 border border-[#dfcca6]/40 text-xs text-stone-300 leading-relaxed shadow-sm">
+        <div className="mt-8 p-4 rounded-[6px] bg-[#faf8f5] border border-[#dfcca6]/70 text-xs text-slate-600 leading-relaxed shadow-2xs">
           <p>
-            London spot market prices update in real time. Final physical buying and selling prices are subject to showroom verification and trade locking by <strong className="text-[#dfcca6] font-semibold">Bhai Jeweller</strong>.
+            London spot market prices update in real time. Final physical buying and selling prices are subject to showroom verification and trade locking by <strong className="text-slate-900 font-semibold">Bhai Jeweller</strong>.
           </p>
         </div>
 

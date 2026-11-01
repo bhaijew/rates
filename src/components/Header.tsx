@@ -35,111 +35,126 @@ export default function Header() {
     };
   }, [isDrawerOpen]);
 
-  // Clean, classic outline icons matching user reference
-  const sliderMenuItems = [
+  // Structured luxury slider categories with icons and badges
+  const menuSections = [
     {
-      label: "Live Rate",
-      href: "/",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 17l6-6 4 4 8-8m0 0h-6m6 0v6" />
-        </svg>
-      ),
+      title: "Bullion & Rates",
+      items: [
+        {
+          label: "Live Rate",
+          href: "/",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 17l6-6 4 4 8-8m0 0h-6m6 0v6" />
+            </svg>
+          ),
+        },
+        {
+          label: "Gold Bars / Coins",
+          href: "/gold-bars",
+          badge: "24K Gold",
+          badgeColor: "gold",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="8" cy="8" r="6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M18.09 10.37A6 6 0 1 1 10.34 18" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M7 6h1v4" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="m16.71 13.88.7.71-2.82 2.82" />
+            </svg>
+          ),
+        },
+        {
+          label: "Silver Bars / Coins",
+          href: "/silver",
+          badge: "999 Silver",
+          badgeColor: "silver",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+            </svg>
+          ),
+        },
+      ],
     },
     {
-      label: "Gold Bars / Coins",
-      href: "/gold-bars",
-      badge: "24K Gold",
-      badgeColor: "gold",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <circle cx="8" cy="8" r="6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M18.09 10.37A6 6 0 1 1 10.34 18" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M7 6h1v4" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="m16.71 13.88.7.71-2.82 2.82" />
-        </svg>
-      ),
+      title: "Trade & Buyback",
+      items: [
+        {
+          label: "Sell Bullion",
+          href: "/sell-bullion",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+              <circle cx="16" cy="9" r="2.8" strokeWidth="1.8" />
+            </svg>
+          ),
+        },
+        {
+          label: "Sell Your Scrap Gold",
+          href: "/sell-your-gold",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="2" y="6" width="20" height="12" rx="2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="12" cy="12" r="2.5" strokeWidth="1.8" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M6 12h.01M18 12h.01" />
+            </svg>
+          ),
+        },
+        {
+          label: "Special Offers",
+          href: "/offers",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M7.5 7.5h.01M3 13.5V6a3 3 0 013-3h7.5a3 3 0 012.12.88l6.5 6.5a3 3 0 010 4.24l-6.5 6.5a3 3 0 01-4.24 0L3.88 15.62A3 3 0 013 13.5z" />
+            </svg>
+          ),
+        },
+      ],
     },
     {
-      label: "Silver Bars / Coins",
-      href: "/silver",
-      badge: "999 Silver",
-      badgeColor: "silver",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
-        </svg>
-      ),
-    },
-    {
-      label: "Sell Bullion",
-      href: "/sell-bullion",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
-          <circle cx="16" cy="9" r="2.8" strokeWidth="1.8" />
-        </svg>
-      ),
-    },
-    {
-      label: "Sell Your Scrap Gold",
-      href: "/sell-your-gold",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <rect x="2" y="6" width="20" height="12" rx="2" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="12" cy="12" r="2.5" strokeWidth="1.8" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M6 12h.01M18 12h.01" />
-        </svg>
-      ),
-    },
-    {
-      label: "Offers",
-      href: "/offers",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M7.5 7.5h.01M3 13.5V6a3 3 0 013-3h7.5a3 3 0 012.12.88l6.5 6.5a3 3 0 010 4.24l-6.5 6.5a3 3 0 01-4.24 0L3.88 15.62A3 3 0 013 13.5z" />
-        </svg>
-      ),
-    },
-    {
-      label: "Zakat Calculator",
-      href: "/zakat",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 3v17m-6-12l-3 5h6l-3-5zm12 0l-3 5h6l-3-5zM3 16a3 3 0 006 0m6 0a3 3 0 006 0M6 20h12" />
-        </svg>
-      ),
-    },
-    {
-      label: "Contact Us",
-      href: "/contact",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-        </svg>
-      ),
-    },
-    {
-      label: "Find Us",
-      href: "/find-us",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 21s-6-5.686-6-10a6 6 0 1112 0c0 4.314-6 10-6 10z" />
-          <circle cx="12" cy="11" r="2.5" strokeWidth="1.8" />
-        </svg>
-      ),
-    },
-    {
-      label: "Privacy Policy",
-      href: "/privacy-policy",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 3s7 3 7 8c0 5-4 8.5-7 10-3-1.5-7-5-7-10 0-5 7-8 7-8z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.5 12l2 2 3.5-3.5" />
-        </svg>
-      ),
+      title: "Services & Contact",
+      items: [
+        {
+          label: "Zakat Calculator",
+          href: "/zakat",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 3v17m-6-12l-3 5h6l-3-5zm12 0l-3 5h6l-3-5zM3 16a3 3 0 006 0m6 0a3 3 0 006 0M6 20h12" />
+            </svg>
+          ),
+        },
+        {
+          label: "Contact Us",
+          href: "/contact",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          ),
+        },
+        {
+          label: "Find Us",
+          href: "/find-us",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 21s-6-5.686-6-10a6 6 0 1112 0c0 4.314-6 10-6 10z" />
+              <circle cx="12" cy="11" r="2.5" strokeWidth="1.8" />
+            </svg>
+          ),
+        },
+        {
+          label: "Privacy Policy",
+          href: "/privacy-policy",
+          icon: (
+            <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 3s7 3 7 8c0 5-4 8.5-7 10-3-1.5-7-5-7-10 0-5 7-8 7-8z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M9.5 12l2 2 3.5-3.5" />
+            </svg>
+          ),
+        },
+      ],
     },
   ];
 
@@ -206,109 +221,136 @@ export default function Header() {
       <div
         className={`fixed inset-0 z-50 transition-opacity duration-300 ${
           isDrawerOpen
-            ? "opacity-100 pointer-events-auto bg-black/40 backdrop-blur-xs"
+            ? "opacity-100 pointer-events-auto bg-black/50 backdrop-blur-[2px]"
             : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsDrawerOpen(false)}
       />
 
-      {/* Side Drawer: Fully Mobile Responsive & Square 5px UI */}
+      {/* Side Drawer: Luxury Warm Ivory Theme with Structured Categories */}
       <aside
         suppressHydrationWarning
-        className={`fixed top-0 left-0 h-full w-[85vw] max-w-[320px] sm:w-[330px] bg-white z-50 shadow-2xl flex flex-col justify-between transform transition-transform duration-300 ease-in-out border-r border-gray-100 ${
+        className={`fixed top-0 left-0 h-full w-[85vw] max-w-[325px] sm:w-[335px] bg-[#fdfcf9] z-50 shadow-2xl flex flex-col justify-between transform transition-transform duration-300 ease-in-out border-r border-[#dfcca6] ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Drawer Header */}
-        <div className="p-4 sm:p-5 pb-3 flex items-center justify-between border-b border-gray-100 shrink-0">
+        {/* Drawer Header with Warm Gold Tone */}
+        <div className="p-4 sm:p-5 pb-3.5 flex items-center justify-between border-b border-[#dfcca6] bg-gradient-to-r from-[#faf5ea] via-[#f7f0e0] to-[#faf5ea] shrink-0">
           
           {/* Brand Emblem */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[5px] border-2 border-[#dfcca6] bg-white p-1 flex items-center justify-center shadow-xs">
-              <div className="w-full h-full rounded-[3px] bg-[#fdfbf7] flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[6px] border-2 border-[#caa771] bg-white p-1 flex items-center justify-center shadow-xs">
+              <div className="w-full h-full rounded-[4px] bg-[#faf6ee] flex items-center justify-center">
                 <BLogo className="w-6 h-6 sm:w-7 sm:h-7" />
               </div>
             </div>
             <div>
-              <div className="font-bold text-gray-900 text-sm leading-snug">
+              <div className="font-extrabold text-slate-900 text-sm leading-snug tracking-tight">
                 Bhai Jeweller
               </div>
-              <div className="text-[11px] text-gray-400 font-medium">Bhai Jeweller UK</div>
+              <div className="text-[10px] text-[#8b6914] font-bold uppercase tracking-wider">
+                London Bullion Desk
+              </div>
             </div>
           </div>
 
-          {/* Square 5px Close Button */}
+          {/* Close Button */}
           <button
             onClick={() => setIsDrawerOpen(false)}
             aria-label="Close slider"
-            className="w-9 h-9 rounded-[5px] border border-[#dfcca6] bg-white text-gray-600 hover:text-black hover:border-gray-400 flex items-center justify-center transition-all duration-200 shadow-xs"
+            className="w-9 h-9 rounded-[6px] border border-[#dfcca6] bg-white text-slate-600 hover:text-slate-950 hover:border-[#8b6914] hover:bg-[#faf5ea] flex items-center justify-center transition-all duration-200 shadow-2xs cursor-pointer"
           >
-            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        {/* Drawer Menu Links - Active state becomes solid gold pill like screenshot */}
+        {/* Drawer Menu Links - Grouped by Category with Elegant Badges */}
         <div 
-          className="flex-1 overflow-y-auto px-3 py-3 space-y-1.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className="flex-1 overflow-y-auto px-3 py-3 space-y-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {sliderMenuItems.map((item) => {
-            const isActive = mounted ? (pathname === item.href) : false;
-
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={() => setIsDrawerOpen(false)}
-                className={`flex items-center gap-3.5 px-4 py-2.5 rounded-[5px] text-sm font-semibold transition-all duration-200 ${
-                  isActive
-                    ? "bg-[#8b6914] text-white shadow-xs"
-                    : "text-gray-700 hover:text-[#8b6914] hover:bg-[#faf7f2]"
-                }`}
-              >
-                {/* Clean Outline Icon */}
-                <span className={`shrink-0 ${isActive ? "text-white" : "text-gray-600"}`}>
-                  {item.icon}
+          {menuSections.map((sec) => (
+            <div key={sec.title} className="space-y-1">
+              <div className="flex items-center gap-1.5 px-2.5 pt-1 pb-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#caa771]" />
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#8b6914]">
+                  {sec.title}
                 </span>
+                <span className="flex-1 h-[1px] bg-gradient-to-r from-[#dfcca6]/70 to-transparent ml-1" />
+              </div>
 
-                {/* Item Label */}
-                <span className="flex-1 text-[13.5px]">{item.label}</span>
+              <div className="space-y-1">
+                {sec.items.map((item) => {
+                  const isActive = mounted ? (pathname === item.href) : false;
 
-                {/* Badge if present */}
-                {"badge" in item && item.badge && (
-                  <span
-                    className={`text-[10px] font-bold px-1.5 py-0.5 rounded-[3px] uppercase tracking-wider shrink-0 ${
-                      isActive
-                        ? "bg-white/20 text-white"
-                        : item.badgeColor === "gold"
-                        ? "bg-[#faf3e3] text-[#8b6914] border border-[#dfcca6]/60"
-                        : "bg-slate-100 text-slate-600 border border-slate-200"
-                    }`}
-                  >
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setIsDrawerOpen(false)}
+                      className={`group flex items-center gap-3 px-3 py-2 rounded-[6px] text-sm font-semibold transition-all duration-200 ${
+                        isActive
+                          ? "bg-gradient-to-r from-[#8b6914] via-[#9c8254] to-[#73582a] text-white shadow-sm border-l-[3.5px] border-[#dfcca6]"
+                          : "text-slate-700 hover:text-[#8b6914] hover:bg-gradient-to-r hover:from-white hover:to-[#f7f1e4] border-l-[3.5px] border-transparent hover:border-[#caa771]"
+                      }`}
+                    >
+                      {/* Icon Container */}
+                      <span
+                        className={`w-8 h-8 rounded-[5px] flex items-center justify-center shrink-0 transition-all ${
+                          isActive
+                            ? "bg-white/20 text-white shadow-2xs"
+                            : "bg-white border border-[#dfcca6]/70 text-[#9c8254] shadow-2xs group-hover:border-[#caa771] group-hover:scale-105"
+                        }`}
+                      >
+                        {item.icon}
+                      </span>
+
+                      {/* Item Label */}
+                      <span className="flex-1 text-[13px] tracking-tight">{item.label}</span>
+
+                      {/* Badge if present */}
+                      {"badge" in item && item.badge && (
+                        <span
+                          className={`text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-[3px] uppercase tracking-wider shrink-0 ${
+                            isActive
+                              ? "bg-white/20 text-white"
+                              : item.badgeColor === "gold"
+                              ? "bg-[#faf2dd] text-[#8b6914] border border-[#dfcca6]"
+                              : "bg-slate-100 text-slate-700 border border-slate-300"
+                          }`}
+                        >
+                          {item.badge}
+                        </span>
+                      )}
+
+                      {/* Subtle Arrow on Active */}
+                      {isActive && (
+                        <span className="text-white/80 text-xs font-bold shrink-0">›</span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Drawer Footer with UK Live Rate Summary & Square 5px Button */}
-        <div className="p-4 border-t border-gray-100 bg-white shrink-0 space-y-2.5">
+        {/* Drawer Footer with UK Live Rate Summary & WhatsApp Button */}
+        <div className="p-4 border-t border-[#dfcca6] bg-gradient-to-b from-[#faf6ee] to-[#f4ece0] shrink-0 space-y-2.5">
           {/* Quick UK Gold Rate Pill */}
-          <div className="p-2.5 rounded-[5px] bg-[#faf8f5] border border-[#dfcca6]/60">
-            <div className="flex items-center justify-between text-[11px] font-semibold text-gray-500">
-              <span className="flex items-center gap-1.5 text-gray-800">
+          <div className="p-2.5 rounded-[6px] bg-white border border-[#dfcca6] shadow-2xs">
+            <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
+              <span className="flex items-center gap-1.5 text-slate-900 font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 Gold Spot (GBP)
               </span>
-              <span className="text-[#8b6914] font-bold">£96.61 / g</span>
+              <span className="text-[#8b6914] font-extrabold">£96.61 / g</span>
             </div>
-            <div className="flex items-center justify-between text-[11px] text-gray-600 mt-1">
+            <div className="flex items-center justify-between text-[11px] text-slate-600 mt-1 pt-1 border-t border-[#dfcca6]/40">
               <span>Per tola (11.66g):</span>
-              <span className="font-bold text-gray-900">£1,126.84</span>
+              <span className="font-extrabold text-slate-900">£1,126.84</span>
             </div>
           </div>
 
@@ -316,8 +358,11 @@ export default function Header() {
             href="https://wa.me/923001234567"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 bg-[#9c8254] hover:bg-[#856b3e] text-white py-2.5 rounded-[5px] text-xs font-semibold shadow-xs transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#1ebe5b] hover:from-[#20ba59] hover:to-[#17a84e] text-white py-2.5 rounded-[6px] text-xs font-bold shadow-xs transition-all active:scale-95"
           >
+            <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+            </svg>
             <span>WhatsApp UK Helpline</span>
           </a>
         </div>
