@@ -158,13 +158,16 @@ export default function Header() {
               <span className="w-5 h-[2.5px] rounded-[1px] bg-[#9c8254] group-hover:bg-[#856b3e] transition-colors" />
             </button>
 
-            {/* B Letter Logo (Favicon Style - Logo Only) */}
+            {/* B Letter Logo + Shop Name */}
             <Link
               href="/"
               aria-label="Bhai Jeweller Home"
-              className="flex items-center group transition-transform duration-200 hover:scale-105 active:scale-95 shrink-0"
+              className="flex items-center gap-2.5 sm:gap-3 group transition-transform duration-200 hover:opacity-90 shrink-0"
             >
               <BLogo showBadge />
+              <span className="text-base sm:text-2xl font-bold tracking-tight text-gray-900 group-hover:text-[#9c8254] transition-colors truncate">
+                Bhai Jeweller
+              </span>
             </Link>
           </div>
 

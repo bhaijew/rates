@@ -12,3 +12,24 @@ body {
   margin: 0;
   padding: 0;
 }
+
+@keyframes loaderSlide {
+  0% {
+    left: -50%;
+  }
+  50% {
+    left: 25%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
