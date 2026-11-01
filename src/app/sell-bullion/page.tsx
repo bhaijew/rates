@@ -7,8 +7,20 @@ export default function SellBullionPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Spot prices per gram (GBP)
-  const spotGold = 97.74;
-  const spotSilver = 1.31;
+  const [spotGold, setSpotGold] = useState(96.61);
+  const [spotSilver, setSpotSilver] = useState(1.30);
+
+  useEffect(() => {
+    fetch("/api/rates")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.goldGbpPerGram) {
+          setSpotGold(data.goldGbpPerGram);
+          setSpotSilver(data.silverGbpPerGram);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Gold Bullion Form State
   const [goldType, setGoldType] = useState<"bar" | "coin">("bar");

@@ -14,7 +14,16 @@ export default function SellYourGoldPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Live 24ct spot price per gram
-  const liveSpot24ct = 97.74;
+  const [liveSpot24ct, setLiveSpot24ct] = useState(96.61);
+
+  useEffect(() => {
+    fetch("/api/rates")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.goldGbpPerGram) setLiveSpot24ct(data.goldGbpPerGram);
+      })
+      .catch(() => {});
+  }, []);
 
   // Form State
   const [selectedPurity, setSelectedPurity] = useState<string>("22ct");

@@ -1,0 +1,23 @@
+{
+  "name": "Bhai Jeweller - Live Gold & Silver Rates",
+  "short_name": "Bhai Jeweller",
+  "description": "Live gold and silver market rates in pounds (GBP), tola and ounce by Bhai Jeweller.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dfcca6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32 48x48 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

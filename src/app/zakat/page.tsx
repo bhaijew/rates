@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function ZakatPage() {
   // Fiqh selection: Hanafi vs Ja'fari (Imam Ja'far Sadiq)
@@ -19,7 +19,16 @@ export default function ZakatPage() {
   const [showBreakdown, setShowBreakdown] = useState(false);
 
   // Live gold spot rate (GBP per gram 24ct)
-  const liveRate24k = 96.61;
+  const [liveRate24k, setLiveRate24k] = useState(96.61);
+
+  useEffect(() => {
+    fetch("/api/rates")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.goldGbpPerGram) setLiveRate24k(data.goldGbpPerGram);
+      })
+      .catch(() => {});
+  }, []);
 
   // Active karat
   const activeKarat = isCustom ? (parseFloat(customPurity) || 24) : selectedPurity;
