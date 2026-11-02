@@ -34,10 +34,11 @@ export default function SellYourGoldPage() {
   const [weightUnit, setWeightUnit] = useState<"gram" | "tola" | "ounce">("gram");
   const [stoneWeight, setStoneWeight] = useState<string>("0");
 
-  const fetchRates = async () => {
+  const fetchRates = async (fresh = false) => {
     setIsRefreshing(true);
     try {
-      const res = await fetch("/api/rates");
+      const url = fresh ? `/api/rates?fresh=true&t=${Date.now()}` : `/api/rates?t=${Date.now()}`;
+      const res = await fetch(url, { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         setRates({
@@ -133,7 +134,7 @@ export default function SellYourGoldPage() {
               <span>Updated: {lastUpdatedDisplay}</span>
               <button
                 type="button"
-                onClick={fetchRates}
+                onClick={() => fetchRates(true)}
                 disabled={isRefreshing}
                 className="p-1 hover:text-[#8b6914] transition-colors"
                 title="Refresh Live Gold Spot Rate"

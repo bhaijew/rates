@@ -54,10 +54,11 @@ export default function SellBullionPage() {
   const [customWeight, setCustomWeight] = useState<string>("");
   const [isCustom, setIsCustom] = useState<boolean>(false);
 
-  const fetchRates = async () => {
+  const fetchRates = async (fresh = false) => {
     setIsRefreshing(true);
     try {
-      const res = await fetch("/api/rates");
+      const url = fresh ? `/api/rates?fresh=true&t=${Date.now()}` : `/api/rates?t=${Date.now()}`;
+      const res = await fetch(url, { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         setRates({
@@ -158,7 +159,7 @@ export default function SellBullionPage() {
               </span>
               <button
                 type="button"
-                onClick={fetchRates}
+                onClick={() => fetchRates(true)}
                 disabled={isRefreshing}
                 className="p-1 hover:text-[#8b6914] transition-colors ml-1"
                 title="Refresh Live Market Rates"

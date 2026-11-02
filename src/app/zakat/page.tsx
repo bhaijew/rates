@@ -22,7 +22,7 @@ export default function ZakatPage() {
   const [liveRate24k, setLiveRate24k] = useState(96.61);
 
   useEffect(() => {
-    fetch("/api/rates")
+    fetch(`/api/rates?t=${Date.now()}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.goldGbpPerGram) setLiveRate24k(data.goldGbpPerGram);

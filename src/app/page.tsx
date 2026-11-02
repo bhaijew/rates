@@ -23,16 +23,29 @@ export default function Home() {
   const [calcUnit, setCalcUnit] = useState<"gram" | "tola" | "ounce">("tola");
   const [calcQuantity, setCalcQuantity] = useState<number>(1);
 
-  // Fetch rates on mount and on refresh
-  const fetchRates = async () => {
+  // Fetch real-time live rates (supports force fresh on demand)
+  const fetchRates = async (fresh = false) => {
     setIsRefreshing(true);
     try {
-      const res = await fetch("/api/rates");
+      const url = fresh
+        ? `/api/rates?fresh=true&t=${Date.now()}`
+        : `/api/rates?t=${Date.now()}`;
+      const res = await fetch(url, { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         setRates({
           goldGbpPerGram: data.goldGbpPerGram || DEFAULT_RATES.goldGbpPerGram,
           silverGbpPerGram: data.silverGbpPerGram || DEFAULT_RATES.silverGbpPerGram,
+          goldOunceGbp: data.goldOunceGbp,
+          silverOunceGbp: data.silverOunceGbp,
+          goldChange24h: data.goldChange24h,
+          goldChangePercent24h: data.goldChangePercent24h,
+          goldLiveHigh: data.goldLiveHigh,
+          goldLiveLow: data.goldLiveLow,
+          silverChange24h: data.silverChange24h,
+          silverChangePercent24h: data.silverChangePercent24h,
+          silverLiveHigh: data.silverLiveHigh,
+          silverLiveLow: data.silverLiveLow,
           lastUpdated: data.lastUpdated || new Date().toISOString(),
           isLive: data.isLive ?? true,
           currency: data.currency || "GBP",
@@ -42,12 +55,17 @@ export default function Home() {
     } catch {
       setRates(DEFAULT_RATES);
     } finally {
-      setTimeout(() => setIsRefreshing(false), 600);
+      setTimeout(() => setIsRefreshing(false), 500);
     }
   };
 
   useEffect(() => {
-    fetchRates();
+    fetchRates(true);
+    // Auto-polling every 20 seconds to guarantee real-time market accuracy
+    const timer = setInterval(() => {
+      fetchRates(false);
+    }, 20000);
+    return () => clearInterval(timer);
   }, []);
 
   const goldGram = rates.goldGbpPerGram;
@@ -152,10 +170,10 @@ export default function Home() {
                   Updated {lastUpdatedDisplay}
                 </p>
                 <button
-                  onClick={fetchRates}
+                  onClick={() => fetchRates(true)}
                   disabled={isRefreshing}
-                  title="Refresh Live London Rates"
-                  className="p-1 text-slate-400 hover:text-[#8b6914] transition-all rounded hover:bg-[#faf5ea] active:scale-90"
+                  title="Click to fetch latest live spot price"
+                  className="p-1 text-slate-400 hover:text-[#8b6914] transition-all rounded hover:bg-[#faf5ea] active:scale-90 cursor-pointer"
                 >
                   <svg
                     className={`w-3.5 h-3.5 transition-transform duration-500 ${isRefreshing ? "animate-spin text-[#8b6914]" : ""}`}
@@ -260,7 +278,32 @@ export default function Home() {
                         / gram
                       </span>
                     </div>
-                    <div className="text-xs text-[#8b6914] mt-1.5 font-semibold flex items-center gap-2">
+
+                    {/* Live High / Low and Change Bar */}
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2 text-xs">
+                      {rates.goldChangePercent24h !== undefined && (
+                        <span className={`inline-flex items-center gap-1 font-extrabold px-2 py-0.5 rounded text-[11px] ${
+                          rates.goldChangePercent24h >= 0 
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200" 
+                            : "bg-rose-50 text-rose-700 border border-rose-200"
+                        }`}>
+                          <span>{rates.goldChangePercent24h >= 0 ? "▲" : "▼"}</span>
+                          <span>{rates.goldChangePercent24h >= 0 ? "+" : ""}{rates.goldChangePercent24h.toFixed(2)}%</span>
+                        </span>
+                      )}
+                      {rates.goldLiveHigh && (
+                        <span className="text-slate-500 text-[11px] font-medium">
+                          Live High: <strong className="text-slate-800 font-bold">£{rates.goldLiveHigh.toFixed(2)}</strong>
+                        </span>
+                      )}
+                      {rates.goldLiveLow && (
+                        <span className="text-slate-500 text-[11px] font-medium">
+                          Live Low: <strong className="text-slate-800 font-bold">£{rates.goldLiveLow.toFixed(2)}</strong>
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="text-xs text-[#8b6914] mt-2 font-semibold flex items-center gap-2">
                       <span className="inline-flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[10px]">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                         London LBMA Benchmark
@@ -369,6 +412,31 @@ export default function Home() {
                         / gram
                       </span>
                     </div>
+
+                    {/* Live High / Low and Change Bar */}
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2 text-xs">
+                      {rates.silverChangePercent24h !== undefined && (
+                        <span className={`inline-flex items-center gap-1 font-extrabold px-2 py-0.5 rounded text-[11px] ${
+                          rates.silverChangePercent24h >= 0 
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200" 
+                            : "bg-rose-50 text-rose-700 border border-rose-200"
+                        }`}>
+                          <span>{rates.silverChangePercent24h >= 0 ? "▲" : "▼"}</span>
+                          <span>{rates.silverChangePercent24h >= 0 ? "+" : ""}{rates.silverChangePercent24h.toFixed(2)}%</span>
+                        </span>
+                      )}
+                      {rates.silverLiveHigh && (
+                        <span className="text-slate-500 text-[11px] font-medium">
+                          Live High: <strong className="text-slate-800 font-bold">£{rates.silverLiveHigh.toFixed(2)}</strong>
+                        </span>
+                      )}
+                      {rates.silverLiveLow && (
+                        <span className="text-slate-500 text-[11px] font-medium">
+                          Live Low: <strong className="text-slate-800 font-bold">£{rates.silverLiveLow.toFixed(2)}</strong>
+                        </span>
+                      )}
+                    </div>
+
                     <div className="text-xs text-slate-500 mt-1.5 font-semibold flex items-center gap-2">
                       <span className="inline-flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[10px]">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />

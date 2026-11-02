@@ -34,7 +34,7 @@ export default function GoldBarsPage() {
   const [filter, setFilter] = useState<"all" | "bar" | "coin">("all");
 
   useEffect(() => {
-    fetch("/api/rates")
+    fetch(`/api/rates?t=${Date.now()}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.goldGbpPerGram) {
