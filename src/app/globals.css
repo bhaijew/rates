@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Rugis';
+  src: url('/fonts/Rugis.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rugis';
+  src: url('/fonts/Rugis-Alt.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #1e293b;
@@ -8,9 +24,14 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-rugis), 'Rugis', var(--font-poppins), system-ui, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-rugis), 'Rugis', var(--font-poppins), system-ui, sans-serif;
+  letter-spacing: -0.015em;
 }
 
 @keyframes loaderSlide {

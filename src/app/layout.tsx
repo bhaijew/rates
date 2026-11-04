@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import SiteLoader from "@/components/SiteLoader";
@@ -8,6 +9,23 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
+  display: "swap",
+});
+
+const rugis = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Rugis.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Rugis-Alt.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-rugis",
   display: "swap",
 });
 
@@ -79,7 +97,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} font-sans`}
+      className={`${rugis.variable} ${poppins.variable} font-sans`}
       suppressHydrationWarning
     >
       <head>
