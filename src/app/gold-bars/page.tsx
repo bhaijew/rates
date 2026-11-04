@@ -16,16 +16,32 @@ interface BullionItem {
 }
 
 const GOLD_ITEMS: BullionItem[] = [
-  { id: "1g", name: "1 Gram Minted Gold Bar", weightGrams: 1, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.12, refiner: "PAMP Suisse / Metalor", imageUrl: "/bullion/gold-1g.webp" },
-  { id: "2.5g", name: "2.5 Gram Minted Gold Bar", weightGrams: 2.5, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.09, refiner: "PAMP Suisse / Valcambi", imageUrl: "/bullion/gold-2.5g.webp" },
-  { id: "5g", name: "5 Gram Minted Gold Bar", weightGrams: 5, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.07, refiner: "PAMP Suisse / Umicore", imageUrl: "/bullion/gold-5g.webp" },
-  { id: "10g", name: "10 Gram Minted Gold Bar", weightGrams: 10, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.05, popular: true, refiner: "PAMP Fortuna Sealed", imageUrl: "/bullion/gold-10g.webp" },
-  { id: "1tola", name: "1 Tola (11.66g) Minted Gold Bar", weightGrams: 11.6638, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.045, popular: true, refiner: "Certified Traditional Tola", imageUrl: "/bullion/gold-tola.webp" },
-  { id: "20g", name: "20 Gram Minted Gold Bar", weightGrams: 20, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.04, refiner: "LBMA Approved Refiner", imageUrl: "/bullion/gold-20g.webp" },
-  { id: "1oz", name: "1 oz Gold Britannia Coin", weightGrams: 31.1035, purity: "999.9 (24K)", type: "coin", premiumPercentage: 0.035, popular: true, refiner: "The Royal Mint", imageUrl: "/bullion/gold-britannia.webp" },
-  { id: "sov", name: "Full Gold Sovereign Coin", weightGrams: 7.988, purity: "916.7 (22K)", type: "coin", premiumPercentage: 0.05, refiner: "The Royal Mint (22ct)", imageUrl: "/bullion/gold-sovereign.webp" },
-  { id: "100g", name: "100 Gram Investment Gold Bar", weightGrams: 100, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.025, popular: true, refiner: "Metalor / Umicore / PAMP", imageUrl: "/bullion/gold-100g.webp" },
-  { id: "1kg", name: "1 Kilo (1,000g) Investment Gold Bar", weightGrams: 1000, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.018, refiner: "LBMA Certified Refiner", imageUrl: "/bullion/gold-1kg.webp" },
+  // Best Sellers & Popular Gold Bars
+  { id: "1g-bar", name: "1 Gram Minted Gold Bar", weightGrams: 1, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.12, refiner: "PAMP Suisse / Metalor", imageUrl: "/bullion/gold-bar-1g.webp" },
+  { id: "2.5g-bar", name: "2.5 Gram Minted Gold Bar", weightGrams: 2.5, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.09, refiner: "PAMP Suisse / Valcambi", imageUrl: "/bullion/gold-bar-2.5g.webp" },
+  { id: "5g-bar", name: "5 Gram Minted Gold Bar", weightGrams: 5, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.07, refiner: "PAMP Suisse / Umicore", imageUrl: "/bullion/gold-bar-5g.webp" },
+  { id: "10g-bar", name: "10 Gram Minted Gold Bar", weightGrams: 10, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.05, popular: true, refiner: "PAMP Fortuna Sealed", imageUrl: "/bullion/gold-bar-10g.webp" },
+  { id: "20g-bar", name: "20 Gram Minted Gold Bar", weightGrams: 20, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.04, refiner: "Metalor / Heraeus", imageUrl: "/bullion/gold-bar-20g.webp" },
+  { id: "1tola-bar", name: "1 Tola (11.66g) Minted Gold Bar", weightGrams: 11.6638, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.045, popular: true, refiner: "Certified Traditional Tola", imageUrl: "/bullion/gold-bar-tola.webp" },
+  { id: "1oz-bar", name: "1 oz Minted Gold Bar", weightGrams: 31.1035, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.035, popular: true, refiner: "The Royal Mint / PAMP", imageUrl: "/bullion/gold-bar-1oz.webp" },
+  { id: "50g-bar", name: "50 Gram Cast Gold Bar", weightGrams: 50, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.03, refiner: "Metalor / Umicore", imageUrl: "/bullion/gold-bar-50g.webp" },
+  { id: "100g-bar", name: "100 Gram Investment Gold Bar", weightGrams: 100, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.025, popular: true, refiner: "Metalor / Umicore / PAMP", imageUrl: "/bullion/gold-bar-100g.webp" },
+  { id: "250g-bar", name: "250 Gram Cast Gold Bar", weightGrams: 250, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.022, refiner: "LBMA Certified Refiner", imageUrl: "/bullion/gold-bar-250g.webp" },
+  { id: "500g-bar", name: "500 Gram Cast Gold Bar", weightGrams: 500, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.02, refiner: "LBMA Certified Refiner", imageUrl: "/bullion/gold-bar-500g.webp" },
+  { id: "1kg-bar", name: "1 Kilo (1,000g) Investment Gold Bar", weightGrams: 1000, purity: "999.9 (24K)", type: "bar", premiumPercentage: 0.018, popular: true, refiner: "LBMA Good Delivery Refiner", imageUrl: "/bullion/gold-bar-1kg.webp" },
+
+  // UK & International Sovereign Gold Coins
+  { id: "sov-full", name: "Full Gold Sovereign Coin", weightGrams: 7.988, purity: "916.7 (22K)", type: "coin", premiumPercentage: 0.05, popular: true, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/gold-coin-sovereign.webp" },
+  { id: "sov-half", name: "Half Gold Sovereign Coin", weightGrams: 3.99, purity: "916.7 (22K)", type: "coin", premiumPercentage: 0.065, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/gold-coin-half-sovereign.webp" },
+  { id: "sov-double", name: "Double Sovereign Gold Coin", weightGrams: 15.98, purity: "916.7 (22K)", type: "coin", premiumPercentage: 0.045, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/gold-coin-double-sovereign.webp" },
+  { id: "brit-1oz", name: "1 oz Gold Britannia Coin", weightGrams: 31.1035, purity: "999.9 (24K)", type: "coin", premiumPercentage: 0.035, popular: true, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/gold-coin-britannia.webp" },
+  { id: "brit-half", name: "1/2 oz Gold Britannia Coin", weightGrams: 15.55, purity: "999.9 (24K)", type: "coin", premiumPercentage: 0.045, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/gold-coin-half-britannia.webp" },
+  { id: "brit-quarter", name: "1/4 oz Gold Britannia Coin", weightGrams: 7.78, purity: "999.9 (24K)", type: "coin", premiumPercentage: 0.06, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/gold-coin-quarter-britannia.webp" },
+  { id: "brit-tenth", name: "1/10 oz Gold Britannia Coin", weightGrams: 3.11, purity: "999.9 (24K)", type: "coin", premiumPercentage: 0.08, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/gold-coin-tenth-britannia.webp" },
+  { id: "krug-1oz", name: "1 oz South African Krugerrand", weightGrams: 33.93, purity: "916.7 (22K)", type: "coin", premiumPercentage: 0.04, popular: true, refiner: "Rand Refinery (1oz Pure)", imageUrl: "/bullion/gold-coin-krugerrand.webp" },
+  { id: "maple-1oz", name: "1 oz Canadian Maple Leaf Gold Coin", weightGrams: 31.1035, purity: "999.9 (24K)", type: "coin", premiumPercentage: 0.038, popular: true, refiner: "Royal Canadian Mint", imageUrl: "/bullion/gold-coin-maple.webp" },
+  { id: "eagle-1oz", name: "1 oz American Eagle Gold Coin", weightGrams: 33.93, purity: "916.7 (22K)", type: "coin", premiumPercentage: 0.045, refiner: "United States Mint (1oz Pure)", imageUrl: "/bullion/gold-coin-eagle.webp" },
+  { id: "phil-1oz", name: "1 oz Austrian Philharmonic Gold Coin", weightGrams: 31.1035, purity: "999.9 (24K)", type: "coin", premiumPercentage: 0.038, refiner: "Austrian Mint (Münze Österreich)", imageUrl: "/bullion/gold-coin-philharmonic.webp" },
 ];
 
 export default function GoldBarsPage() {

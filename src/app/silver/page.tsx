@@ -16,12 +16,23 @@ interface SilverItem {
 }
 
 const SILVER_ITEMS: SilverItem[] = [
-  { id: "1oz", name: "1 oz Silver Britannia Coin", weightGrams: 31.1035, purity: "999 Fine Silver", type: "coin", premiumPercentage: 0.18, popular: true, refiner: "The Royal Mint", imageUrl: "/bullion/silver-britannia.webp" },
-  { id: "1oz-bar", name: "1 oz Minted Silver Bar", weightGrams: 31.1035, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.16, refiner: "PAMP / Metalor", imageUrl: "/bullion/silver-1oz-bar.webp" },
-  { id: "100g", name: "100 Gram Minted Silver Bar", weightGrams: 100, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.15, refiner: "Umicore / PAMP", imageUrl: "/bullion/silver-100g.webp" },
-  { id: "250g", name: "250 Gram Cast Silver Bar", weightGrams: 250, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.12, popular: true, refiner: "Nadir / Metalor", imageUrl: "/bullion/silver-250g.webp" },
-  { id: "500g", name: "500 Gram Cast Silver Bar", weightGrams: 500, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.10, refiner: "Metalor / Umicore", imageUrl: "/bullion/silver-500g.webp" },
-  { id: "1kg", name: "1 Kilo (1,000g) Cast Silver Bar", weightGrams: 1000, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.085, popular: true, refiner: "LBMA Certified 1kg Bar", imageUrl: "/bullion/silver-1kg.webp" },
+  // Silver Bars
+  { id: "1oz-bar", name: "1 oz Minted Silver Bar", weightGrams: 31.1035, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.16, refiner: "PAMP / Metalor", imageUrl: "/bullion/silver-bar-1oz.webp" },
+  { id: "50g-bar", name: "50 Gram Minted Silver Bar", weightGrams: 50, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.15, refiner: "PAMP Suisse / Umicore", imageUrl: "/bullion/silver-bar-50g.webp" },
+  { id: "100g-bar", name: "100 Gram Minted Silver Bar", weightGrams: 100, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.14, popular: true, refiner: "Umicore / Heraeus", imageUrl: "/bullion/silver-bar-100g.webp" },
+  { id: "250g-bar", name: "250 Gram Cast Silver Bar", weightGrams: 250, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.12, popular: true, refiner: "Nadir / Metalor", imageUrl: "/bullion/silver-bar-250g.webp" },
+  { id: "500g-bar", name: "500 Gram Cast Silver Bar", weightGrams: 500, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.10, refiner: "Metalor / Umicore", imageUrl: "/bullion/silver-bar-500g.webp" },
+  { id: "10oz-bar", name: "10 oz Cast Silver Bar", weightGrams: 311.035, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.09, refiner: "The Royal Mint / Metalor", imageUrl: "/bullion/silver-bar-10oz.webp" },
+  { id: "1kg-bar", name: "1 Kilo (1,000g) Cast Silver Bar", weightGrams: 1000, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.085, popular: true, refiner: "LBMA Certified 1kg Bar", imageUrl: "/bullion/silver-bar-1kg.webp" },
+  { id: "5kg-bar", name: "5 Kilo (5,000g) Cast Silver Bar", weightGrams: 5000, purity: "999 Fine Silver", type: "bar", premiumPercentage: 0.075, refiner: "Umicore / LBMA Refiners", imageUrl: "/bullion/silver-bar-5kg.webp" },
+
+  // Silver Coins
+  { id: "brit-1oz", name: "1 oz Silver Britannia Coin", weightGrams: 31.1035, purity: "999 Fine Silver", type: "coin", premiumPercentage: 0.18, popular: true, refiner: "The Royal Mint (CGT Free)", imageUrl: "/bullion/silver-coin-britannia.webp" },
+  { id: "maple-1oz", name: "1 oz Canadian Silver Maple Leaf", weightGrams: 31.1035, purity: "999.9 Fine Silver", type: "coin", premiumPercentage: 0.18, popular: true, refiner: "Royal Canadian Mint", imageUrl: "/bullion/silver-coin-maple.webp" },
+  { id: "eagle-1oz", name: "1 oz American Silver Eagle", weightGrams: 31.1035, purity: "999 Fine Silver", type: "coin", premiumPercentage: 0.20, refiner: "United States Mint", imageUrl: "/bullion/silver-coin-eagle.webp" },
+  { id: "krug-1oz", name: "1 oz South African Silver Krugerrand", weightGrams: 31.1035, purity: "999 Fine Silver", type: "coin", premiumPercentage: 0.17, refiner: "Rand Refinery", imageUrl: "/bullion/silver-coin-krugerrand.webp" },
+  { id: "phil-1oz", name: "1 oz Austrian Silver Philharmonic", weightGrams: 31.1035, purity: "999 Fine Silver", type: "coin", premiumPercentage: 0.17, refiner: "Austrian Mint", imageUrl: "/bullion/silver-coin-philharmonic.webp" },
+  { id: "kang-1oz", name: "1 oz Australian Silver Kangaroo", weightGrams: 31.1035, purity: "999.9 Fine Silver", type: "coin", premiumPercentage: 0.18, popular: true, refiner: "The Perth Mint", imageUrl: "/bullion/silver-coin-kangaroo.webp" },
 ];
 
 export default function SilverPage() {
