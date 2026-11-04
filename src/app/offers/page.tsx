@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import InstagramStoriesWidget from "@/components/InstagramStoriesWidget";
 
 export default function OffersPage() {
   const waInquiry = encodeURIComponent(
@@ -20,41 +21,43 @@ export default function OffersPage() {
             <span className="text-[10px] sm:text-[11px] font-bold text-[#8b6914] uppercase tracking-wider bg-[#fbf5ea] px-2.5 py-1 rounded-[4px] border border-[#dfcca6]/60">
               Bhai Jewellers Bradford
             </span>
-            <span className="text-xs text-slate-400 font-medium">· Showroom Promotions</span>
+            <span className="text-xs text-slate-400 font-medium">· Live Showroom Stories & Offers</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 mt-2">
-            Special Offers & Deals
+            Special Offers & Stories
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Exclusive showroom promotions, festive discounts, and limited-time bullion specials.
+            Live Instagram stories, daily showroom arrivals, and exclusive limited-time bullion offers.
           </p>
         </div>
 
-        {/* Clean Empty State Card */}
-        <div className="mt-10 sm:mt-14 bg-gradient-to-b from-white via-[#fdfbf9] to-[#fbf7f0] border-2 border-[#dfcca6] rounded-2xl p-8 sm:p-14 text-center shadow-[0_4px_24px_-4px_rgba(212,175,55,0.12)] relative overflow-hidden">
+        {/* Live Instagram Stories Widget Section */}
+        <div className="mt-8">
+          <InstagramStoriesWidget />
+        </div>
+
+        {/* Showroom Direct WhatsApp CTA Card */}
+        <div className="mt-8 bg-gradient-to-b from-white via-[#fdfbf9] to-[#fbf7f0] border-2 border-[#dfcca6] rounded-2xl p-6 sm:p-10 text-center shadow-[0_4px_24px_-4px_rgba(212,175,55,0.12)] relative overflow-hidden">
           {/* Top Gold Accent */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4af37] via-[#f7e799] to-[#aa7c11]" />
 
           {/* Icon Stage */}
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#faf5ea] to-[#eedbb9] border border-[#d4af37]/60 flex items-center justify-center text-[#8b6914] mx-auto mb-5 shadow-sm">
-            <svg className="w-8 h-8 sm:w-10 sm:h-10 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="1.8">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#faf5ea] to-[#eedbb9] border border-[#d4af37]/60 flex items-center justify-center text-[#8b6914] mx-auto mb-4 shadow-sm">
+            <svg className="w-7 h-7 sm:w-8 sm:h-8 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="1.8">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v3a2 2 0 01-2 2m-14 0v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
             </svg>
           </div>
 
           <h2 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">
-            No Active Public Offers Currently
+            Want Today&apos;s Best Bullion & Jewellery Deals?
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto mt-2 leading-relaxed">
-            All gold bars, sovereign coins, and fine jewellery are currently priced transparently against the live London spot fixing.
-          </p>
-          <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
-            New seasonal promotions and exclusive festive offers will be announced here and on our official social channels.
+            All gold bars, sovereign coins, and bespoke 22K/24K jewellery rates update constantly against the live London spot fixing.
           </p>
 
           {/* Action CTAs */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href={`https://wa.me/447735727897?text=${waInquiry}`}
               target="_blank"
