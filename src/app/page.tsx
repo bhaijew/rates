@@ -15,7 +15,7 @@ export default function Home() {
   const [activeView, setActiveView] = useState<"current" | "interactive" | "overview">("current");
   const [rates, setRates] = useState(DEFAULT_RATES);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState(formatUKDateTime());
+  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState("");
   const [heroBg, setHeroBg] = useState<"jewelry" | "gold">("jewelry");
 
   // Interactive Calculator State
@@ -60,6 +60,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    setLastUpdatedDisplay(formatUKDateTime());
     fetchRates(true);
     // Auto-polling every 20 seconds to guarantee real-time market accuracy
     const timer = setInterval(() => {
@@ -166,8 +167,8 @@ export default function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <p className="text-xs text-slate-600 font-medium">
-                  Updated {lastUpdatedDisplay}
+                <p className="text-xs text-slate-600 font-medium" suppressHydrationWarning>
+                  {lastUpdatedDisplay ? `Updated ${lastUpdatedDisplay}` : "Live Market Feed"}
                 </p>
                 <button
                   onClick={() => fetchRates(true)}
@@ -712,8 +713,8 @@ export default function Home() {
               <span className="text-slate-600 font-medium">
                 Gold : Silver Ratio: <strong className="text-slate-900">{goldSilverRatio}</strong>
               </span>
-              <span className="text-[#8b6914] font-semibold">
-                Updated {lastUpdatedDisplay}
+              <span className="text-[#8b6914] font-semibold" suppressHydrationWarning>
+                {lastUpdatedDisplay ? `Updated ${lastUpdatedDisplay}` : "Live Market Feed"}
               </span>
             </div>
           </div>

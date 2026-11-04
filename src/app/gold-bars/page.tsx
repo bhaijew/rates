@@ -30,10 +30,11 @@ const GOLD_ITEMS: BullionItem[] = [
 
 export default function GoldBarsPage() {
   const [rates, setRates] = useState(DEFAULT_RATES);
-  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState(formatUKDateTime());
+  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState("");
   const [filter, setFilter] = useState<"all" | "bar" | "coin">("all");
 
   useEffect(() => {
+    setLastUpdatedDisplay(formatUKDateTime());
     fetch(`/api/rates?t=${Date.now()}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
@@ -91,7 +92,9 @@ export default function GoldBarsPage() {
               Spot: <strong className="text-slate-900">{formatGBP(goldGram)}/g</strong>
             </span>
             <span className="text-slate-300">|</span>
-            <span className="text-[11px] text-slate-400">{lastUpdatedDisplay}</span>
+            <span className="text-[11px] text-slate-400" suppressHydrationWarning>
+              {lastUpdatedDisplay || "Live Feed"}
+            </span>
           </div>
         </div>
 

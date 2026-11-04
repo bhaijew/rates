@@ -26,7 +26,7 @@ const KARAT_CONFIGS: KaratConfig[] = [
 export default function SellYourGoldPage() {
   const [rates, setRates] = useState(DEFAULT_RATES);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState(formatUKDateTime());
+  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState("");
 
   // Calculator Inputs
   const [selectedKarat, setSelectedKarat] = useState<string>("22ct");
@@ -58,6 +58,7 @@ export default function SellYourGoldPage() {
   };
 
   useEffect(() => {
+    setLastUpdatedDisplay(formatUKDateTime());
     fetchRates();
     // Auto refresh every 60 seconds
     const interval = setInterval(fetchRates, 60000);
@@ -131,7 +132,7 @@ export default function SellYourGoldPage() {
               </span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-500">
-              <span>Updated: {lastUpdatedDisplay}</span>
+              <span suppressHydrationWarning>{lastUpdatedDisplay ? `Updated: ${lastUpdatedDisplay}` : "Live Feed"}</span>
               <button
                 type="button"
                 onClick={() => fetchRates(true)}

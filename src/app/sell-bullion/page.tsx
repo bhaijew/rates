@@ -45,7 +45,7 @@ const BULLION_PRESETS: BullionPreset[] = [
 export default function SellBullionPage() {
   const [rates, setRates] = useState(DEFAULT_RATES);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState(formatUKDateTime());
+  const [lastUpdatedDisplay, setLastUpdatedDisplay] = useState("");
 
   // Interactive Calculator State
   const [activeMetal, setActiveMetal] = useState<"gold" | "silver">("gold");
@@ -78,6 +78,7 @@ export default function SellBullionPage() {
   };
 
   useEffect(() => {
+    setLastUpdatedDisplay(formatUKDateTime());
     fetchRates();
     const interval = setInterval(fetchRates, 60000);
     return () => clearInterval(interval);
