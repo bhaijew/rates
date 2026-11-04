@@ -720,9 +720,10 @@ export default function Home() {
           </div>
         )}
 
-        {/* 3. OVERVIEW: Comprehensive Purity Table */}
+        {/* 3. OVERVIEW: Comprehensive Purity Table (Mobile Responsive Cards + Desktop Table) */}
         {activeView === "overview" && (
           <div className="mt-8 border-2 border-[#dfcca6]/80 rounded-2xl overflow-hidden bg-white shadow-xs animate-fadeIn">
+            {/* Header */}
             <div className="p-4 bg-gradient-to-r from-[#faf8f5] to-white border-b border-[#dfcca6]/60 flex items-center justify-between">
               <div>
                 <span className="font-bold text-sm text-slate-900 block">Precious Metals Complete Overview (GBP)</span>
@@ -732,7 +733,116 @@ export default function Home() {
                 • Live Feed
               </span>
             </div>
-            <div className="overflow-x-auto">
+
+            {/* Mobile View: Stacked Cards (Visible only on mobile < md) */}
+            <div className="block md:hidden p-3 space-y-3 bg-[#faf8f5]/40">
+              {GOLD_PURITIES.map((purity) => {
+                const priceGram = goldGram * purity.fraction;
+                const priceTolaTrad = priceGram * WEIGHT_CONVERSIONS.tolaTraditional;
+                const priceTola10g = priceGram * WEIGHT_CONVERSIONS.tola10g;
+                const priceOunce = priceGram * WEIGHT_CONVERSIONS.troyOunce;
+                const is24K = purity.karat === "24K";
+
+                return (
+                  <div
+                    key={purity.karat}
+                    className={`p-3.5 rounded-xl border transition-all ${
+                      is24K
+                        ? "bg-gradient-to-br from-amber-50/60 to-white border-[#dfcca6] shadow-xs"
+                        : "bg-white border-stone-200/90"
+                    }`}
+                  >
+                    {/* Top Row: Karat + Gram Price */}
+                    <div className="flex items-center justify-between border-b border-stone-100 pb-2.5">
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-xs font-black px-2 py-0.5 rounded ${
+                            is24K ? "bg-[#8b6914] text-white" : "bg-slate-100 text-slate-800"
+                          }`}>
+                            {purity.karat}
+                          </span>
+                          <span className="text-xs font-bold text-slate-900">Gold</span>
+                        </div>
+                        <p className="text-[10px] text-slate-500 mt-0.5">{purity.purity} · {purity.label}</p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase block">Per Gram</span>
+                        <span className={`text-base font-black ${is24K ? "text-[#8b6914]" : "text-slate-900"}`}>
+                          {formatGBP(priceGram)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Weight Breakdown Grid */}
+                    <div className="grid grid-cols-3 gap-2 mt-2.5 text-center">
+                      <div className="p-2 rounded-lg bg-[#faf6ee]/80 border border-[#dfcca6]/40">
+                        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tight block">Tola (11.66g)</span>
+                        <span className="text-xs font-extrabold text-slate-900 block mt-0.5">
+                          {formatGBP(priceTolaTrad)}
+                        </span>
+                      </div>
+                      <div className="p-2 rounded-lg bg-[#faf6ee]/80 border border-[#dfcca6]/40">
+                        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tight block">Tola (10g)</span>
+                        <span className="text-xs font-extrabold text-slate-900 block mt-0.5">
+                          {formatGBP(priceTola10g)}
+                        </span>
+                      </div>
+                      <div className="p-2 rounded-lg bg-[#faf6ee]/80 border border-[#dfcca6]/40">
+                        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tight block">Ounce (31.10g)</span>
+                        <span className="text-xs font-extrabold text-slate-900 block mt-0.5">
+                          {formatGBP(priceOunce)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Silver Mobile Card */}
+              <div className="p-3.5 rounded-xl border bg-gradient-to-br from-slate-50 to-white border-slate-200 shadow-xs">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs font-black px-2 py-0.5 rounded bg-slate-800 text-white">
+                        999
+                      </span>
+                      <span className="text-xs font-bold text-slate-900">Silver</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 mt-0.5">Pure Fine Investment Grade</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase block">Per Gram</span>
+                    <span className="text-base font-black text-slate-900">
+                      {formatGBP(silverGram)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 mt-2.5 text-center">
+                  <div className="p-2 rounded-lg bg-slate-100/70 border border-slate-200">
+                    <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tight block">Tola (11.66g)</span>
+                    <span className="text-xs font-extrabold text-slate-900 block mt-0.5">
+                      {formatGBP(silverGram * WEIGHT_CONVERSIONS.tolaTraditional)}
+                    </span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-slate-100/70 border border-slate-200">
+                    <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tight block">Tola (10g)</span>
+                    <span className="text-xs font-extrabold text-slate-900 block mt-0.5">
+                      {formatGBP(silverGram * WEIGHT_CONVERSIONS.tola10g)}
+                    </span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-slate-100/70 border border-slate-200">
+                    <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tight block">Ounce (31.10g)</span>
+                    <span className="text-xs font-extrabold text-slate-900 block mt-0.5">
+                      {formatGBP(silverGram * WEIGHT_CONVERSIONS.troyOunce)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop View: Full Table (Visible on md and larger) */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-[#dfcca6]/40 bg-[#faf8f5]/60 text-[11px] uppercase text-slate-500 font-semibold">
