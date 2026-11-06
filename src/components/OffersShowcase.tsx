@@ -198,9 +198,9 @@ export default function OffersShowcase() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        {/* Subtitle at top: "Discover our latest jewellery & gold offers" */}
+        {/* Subtitle at top: "Discover our latest jewellery & gold offers" with Notche font */}
         <div className="text-center mb-6">
-          <p className="text-sm sm:text-base text-[#6b5832] font-serif italic tracking-wide">
+          <p className="text-xs sm:text-sm text-[#7a5d28] font-notche uppercase tracking-[0.22em] font-bold">
             Discover our latest jewellery & gold offers
           </p>
         </div>
@@ -259,7 +259,7 @@ export default function OffersShowcase() {
                         )}
 
                         {/* Price or Ref Watermark */}
-                        <div className="absolute bottom-1 right-1 bg-black/65 backdrop-blur-xs text-[9px] font-bold text-amber-200 px-1 py-0.5 rounded leading-none">
+                        <div className="absolute bottom-1 right-1 bg-black/65 backdrop-blur-xs text-[9px] font-bold text-amber-200 px-1 py-0.5 rounded leading-none font-numbers">
                           {item.priceFormatted || item.ref}
                         </div>
 
@@ -379,7 +379,7 @@ export default function OffersShowcase() {
                   <div className="absolute inset-0 pointer-events-none p-5 sm:p-6 flex flex-col justify-between z-20">
                     {/* Top Row: Title & Specs */}
                     <div className="pt-4 text-center">
-                      <span className="inline-block text-xs sm:text-sm font-serif italic text-stone-900 drop-shadow-xs bg-white/85 backdrop-blur-xs px-3.5 py-1 rounded-full border border-stone-200/80">
+                      <span className="inline-block text-xs sm:text-sm font-notche font-bold tracking-wide text-stone-900 drop-shadow-xs bg-white/85 backdrop-blur-xs px-3.5 py-1 rounded-full border border-stone-200/80">
                         {currentItem?.title}
                       </span>
                       <p className="text-[10px] sm:text-xs text-stone-700 font-sans font-medium mt-1 drop-shadow-xs">
@@ -389,19 +389,19 @@ export default function OffersShowcase() {
 
                     {/* Bottom Row: Date on Left, Price / Ref on Right */}
                     <div className="flex items-end justify-between text-stone-800">
-                      <div className="text-[10px] sm:text-xs font-mono font-medium bg-white/80 backdrop-blur-xs px-2.5 py-1 rounded border border-stone-200/80">
+                      <div className="text-[11px] sm:text-xs font-numbers font-semibold bg-white/80 backdrop-blur-xs px-2.5 py-1 rounded border border-stone-200/80">
                         {currentItem?.date}
                       </div>
 
                       {currentItem?.priceFormatted ? (
                         <div className="text-right">
-                          <div className="text-2xl sm:text-3xl font-serif font-bold text-[#73582a] drop-shadow-xs tracking-tight bg-white/85 backdrop-blur-xs px-3 py-0.5 rounded-lg border border-amber-200/80">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl font-numbers font-bold text-[#73582a] drop-shadow-xs tracking-tight bg-white/85 backdrop-blur-xs px-3 py-0.5 rounded-lg border border-amber-200/80">
                             {currentItem.priceFormatted}
                           </div>
                         </div>
                       ) : (
                         <div className="text-right">
-                          <span className="text-[11px] font-mono font-bold text-amber-900 bg-amber-100/90 backdrop-blur-xs px-2.5 py-1 rounded border border-amber-300">
+                          <span className="text-[11px] font-numbers font-bold text-amber-900 bg-amber-100/90 backdrop-blur-xs px-2.5 py-1 rounded border border-amber-300">
                             {currentItem?.ref}
                           </span>
                         </div>
@@ -464,23 +464,30 @@ export default function OffersShowcase() {
               
               {/* Tag: TODAY'S OFFER or LIVE INSTAGRAM STORY */}
               <div>
-                <span className="text-[11px] sm:text-xs font-bold tracking-[0.28em] text-[#8b6914] uppercase">
+                <span className="text-[11px] sm:text-xs font-bold tracking-[0.25em] text-[#8b6914] uppercase font-notche">
                   {currentItem?.source === "instagram" ? "LIVE INSTAGRAM STORY" : "TODAY'S OFFER"}
                 </span>
               </div>
 
-              {/* Title: Latest from Bhai Jewellers */}
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-slate-900 tracking-tight leading-tight">
+              {/* Title: Latest from Bhai Jewellers with Notche font */}
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-notche font-bold text-slate-900 tracking-tight leading-tight">
                 Latest from Bhai Jewellers
               </h2>
 
-              {/* Counter & Reference Code */}
+              {/* Counter & Reference Code with custom numbers font */}
               <div className="space-y-1 text-xs sm:text-sm text-stone-600">
                 <p className="font-medium text-stone-700">
-                  {currentItem?.source === "instagram" ? "Story" : "Offer"} {activeIndex + 1} of {totalItems}
+                  {currentItem?.source === "instagram" ? "Story" : "Offer"}{" "}
+                  <span className="font-numbers font-bold text-stone-900 text-sm">
+                    {activeIndex + 1}
+                  </span>{" "}
+                  of{" "}
+                  <span className="font-numbers font-bold text-stone-900 text-sm">
+                    {totalItems}
+                  </span>
                 </p>
-                <p className="font-mono text-stone-500 font-semibold tracking-wide">
-                  Ref {currentItem?.ref}
+                <p className="font-numbers text-stone-500 font-semibold tracking-wide">
+                  Ref <span className="font-numbers tracking-wider text-stone-700">{currentItem?.ref}</span>
                 </p>
               </div>
 
@@ -494,7 +501,7 @@ export default function OffersShowcase() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-stone-500">Date Posted:</span>
-                  <span className="font-medium text-stone-800">{currentItem?.date}</span>
+                  <span className="font-numbers font-semibold text-stone-800">{currentItem?.date}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-stone-500">Showroom:</span>
@@ -505,7 +512,7 @@ export default function OffersShowcase() {
                 {currentItem?.priceFormatted && (
                   <div className="flex justify-between items-center">
                     <span className="text-stone-500">Offer Price:</span>
-                    <span className="font-bold text-base text-[#73582a]">
+                    <span className="font-numbers font-bold text-xl text-[#73582a]">
                       {currentItem.priceFormatted}
                     </span>
                   </div>
@@ -612,10 +619,10 @@ export default function OffersShowcase() {
             {/* Modal Header */}
             <div className="flex items-center justify-between px-5 py-3.5 bg-black/60 border-b border-stone-800 text-white">
               <div>
-                <span className="text-[10px] font-bold text-amber-400 tracking-widest uppercase">
+                <span className="text-[10px] font-bold text-amber-400 tracking-widest uppercase font-numbers">
                   Ref: {currentItem.ref} · {currentItem.date}
                 </span>
-                <h3 className="text-sm sm:text-base font-serif font-bold text-white">
+                <h3 className="text-sm sm:text-base font-notche font-bold text-white">
                   {currentItem.title}
                 </h3>
               </div>
@@ -687,7 +694,7 @@ export default function OffersShowcase() {
                   >
                     −
                   </button>
-                  <span>{Math.round(lightboxZoom * 100)}%</span>
+                  <span className="font-numbers">{Math.round(lightboxZoom * 100)}%</span>
                   <button
                     type="button"
                     onClick={() => setLightboxZoom((z) => Math.min(2.5, z + 0.25))}
@@ -713,7 +720,7 @@ export default function OffersShowcase() {
                   {currentItem.description}
                 </p>
                 {currentItem.priceFormatted && (
-                  <p className="text-amber-300 font-bold text-lg">{currentItem.priceFormatted}</p>
+                  <p className="text-amber-300 font-numbers font-bold text-2xl">{currentItem.priceFormatted}</p>
                 )}
               </div>
 

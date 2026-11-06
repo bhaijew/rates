@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Cinzel, Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -9,6 +9,37 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
+  display: "swap",
+});
+
+const cinzel = Cinzel({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-numbers",
+  display: "swap",
+});
+
+const notche = localFont({
+  src: [
+    {
+      path: "../../public/fonts/CFNotcheDemo-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/CFNotcheDemo-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-notche",
   display: "swap",
 });
 
@@ -97,7 +128,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${rugis.variable} ${poppins.variable} font-sans`}
+      className={`${notche.variable} ${cinzel.variable} ${cormorant.variable} ${rugis.variable} ${poppins.variable} font-sans`}
       suppressHydrationWarning
     >
       <head>
@@ -107,7 +138,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="bg-white text-slate-800 min-h-screen flex flex-col"
+        className="bg-white text-slate-800 min-h-screen flex flex-col font-sans"
         suppressHydrationWarning
       >
         <SiteLoader />

@@ -29,7 +29,7 @@ export default function OffersPage() {
               <span className="text-xs text-stone-500 font-medium">· Live Showroom Stories & Offers</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-serif font-extrabold tracking-tight text-slate-900 mt-2">
+            <h1 className="text-2xl sm:text-4xl font-notche font-bold tracking-tight text-slate-900 mt-2">
               Today&apos;s Special Offers
             </h1>
             <p className="text-xs sm:text-sm text-stone-600 mt-1">
@@ -60,7 +60,7 @@ export default function OffersPage() {
               <svg className="w-3.5 h-3.5 text-[#8b6914]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              <span>01274 488801</span>
+              <span className="font-numbers tracking-wide font-semibold">01274 488801</span>
             </a>
           </div>
         </div>
@@ -157,7 +157,7 @@ export default function OffersPage() {
             href="tel:01274488801"
             className="text-[#8b6914] font-bold hover:underline shrink-0 text-xs sm:text-sm"
           >
-            Call: 01274 488801
+            Call: <span className="font-numbers tracking-wide font-bold">01274 488801</span>
           </a>
         </div>
       </main>
