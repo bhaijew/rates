@@ -16,6 +16,18 @@ export interface PrivacySection {
   content: string;
 }
 
+export interface PageSlide {
+  id: string;
+  title: string;
+  subtitle: string;
+  tag?: string;
+  imageUrl: string;
+  linkUrl: string;
+  buttonText: string;
+  active: boolean;
+  order: number;
+}
+
 export interface SiteContent {
   contact: {
     showroomName: string;
@@ -41,6 +53,7 @@ export interface SiteContent {
     subtitle: string;
     sections: PrivacySection[];
   };
+  slides: PageSlide[];
 }
 
 export const INITIAL_SITE_CONTENT: SiteContent = {
@@ -122,5 +135,39 @@ export const INITIAL_SITE_CONTENT: SiteContent = {
       },
     ],
   },
+  slides: [
+    {
+      id: "slide-1",
+      title: "Royal 22K Bridal & Filigree Jewellery",
+      subtitle: "Handcrafted heirloom bridal sets, chains, and rings fresh from our Bradford artisan workshop.",
+      tag: "SHOWROOM ARRIVALS",
+      imageUrl: "/offers/offer-1.jpg",
+      linkUrl: "/offers",
+      buttonText: "View Today's Offers",
+      active: true,
+      order: 1,
+    },
+    {
+      id: "slide-2",
+      title: "LBMA Certified Gold & Silver Bullion",
+      subtitle: "Pure 24K investment gold bars and 22K sovereign coins synced live with London Fixings spot rates.",
+      tag: "0% VAT EXEMPT",
+      imageUrl: "/bullion/gold-bar-1kg.webp",
+      linkUrl: "/gold-bars",
+      buttonText: "Browse Bullion Catalog",
+      active: true,
+      order: 2,
+    },
+    {
+      id: "slide-3",
+      title: "Sell Your Scrap Gold at Top Market Rates",
+      subtitle: "Instant non-destructive XRF laser purity testing with same-day cash or bank transfer in Bradford.",
+      tag: "INSTANT CASHOUT",
+      imageUrl: "/offers/offer-2.jpg",
+      linkUrl: "/sell-your-gold",
+      buttonText: "Calculate Scrap Value",
+      active: true,
+      order: 3,
+    },
+  ],
 };
-

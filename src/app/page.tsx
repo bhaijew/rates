@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import PageHeroSlider from "@/components/PageHeroSlider";
 import {
   DEFAULT_RATES,
   WEIGHT_CONVERSIONS,
@@ -223,6 +224,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Dynamic Showcase Slider (Managed via Admin Studio) */}
+        <PageHeroSlider />
 
         {/* 1. CURRENT VIEW: Spot Cards + Market Ratio */}
         {activeView === "current" && (

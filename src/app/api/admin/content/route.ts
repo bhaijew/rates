@@ -71,6 +71,9 @@ export async function POST(request: NextRequest) {
             contact: { ...current.siteContent.contact, ...(body.siteContent.contact || {}) },
             findUs: { ...current.siteContent.findUs, ...(body.siteContent.findUs || {}) },
             privacyPolicy: { ...current.siteContent.privacyPolicy, ...(body.siteContent.privacyPolicy || {}) },
+            slides: Array.isArray(body.siteContent.slides)
+              ? body.siteContent.slides
+              : current.siteContent.slides || INITIAL_SITE_CONTENT.slides,
           }
         : current.siteContent,
       lastUpdated: new Date().toISOString(),

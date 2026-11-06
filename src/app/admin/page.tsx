@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { BullionProduct, INITIAL_GOLD_ITEMS, INITIAL_SILVER_ITEMS } from "@/data/bullion-items";
-import { SiteContent, INITIAL_SITE_CONTENT } from "@/data/site-content";
+import { SiteContent, INITIAL_SITE_CONTENT, PageSlide } from "@/data/site-content";
 
 // Helper function to calculate real-time price & specs
 export function getBullionCalculatedPrice(
@@ -38,13 +38,14 @@ export function getBullionCalculatedPrice(
 }
 
 export default function AdminDashboardPage() {
-  // Authentication PIN state
+  // Authentication Password state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [pinInput, setPinInput] = useState("");
-  const [pinError, setPinError] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [authError, setAuthError] = useState(false);
 
   // Active Admin Tab
-  const [activeTab, setActiveTab] = useState<"bullion" | "contact" | "findUs" | "privacy">("bullion");
+  const [activeTab, setActiveTab] = useState<"bullion" | "sliders" | "contact" | "findUs" | "privacy">("bullion");
   const [bullionSubTab, setBullionSubTab] = useState<"gold" | "silver">("gold");
 
   // State for data
@@ -63,6 +64,10 @@ export default function AdminDashboardPage() {
   // Edit / Add modal state for Bullion
   const [editingItem, setEditingItem] = useState<BullionProduct | null>(null);
   const [isNewItemModal, setIsNewItemModal] = useState(false);
+
+  // Edit / Add modal state for Sliders
+  const [editingSlide, setEditingSlide] = useState<PageSlide | null>(null);
+  const [isNewSlideModal, setIsNewSlideModal] = useState(false);
 
   // Status message
   const [isSaving, setIsSaving] = useState(false);
@@ -95,21 +100,31 @@ export default function AdminDashboardPage() {
         if (res.success && res.data) {
           if (Array.isArray(res.data.goldItems)) setGoldItems(res.data.goldItems);
           if (Array.isArray(res.data.silverItems)) setSilverItems(res.data.silverItems);
-          if (res.data.siteContent) setSiteContent(res.data.siteContent);
+          if (res.data.siteContent) {
+            setSiteContent({
+              ...INITIAL_SITE_CONTENT,
+              ...res.data.siteContent,
+              slides: Array.isArray(res.data.siteContent.slides)
+                ? res.data.siteContent.slides
+                : INITIAL_SITE_CONTENT.slides,
+            });
+          }
         }
       })
       .catch((err) => console.error("Error loading admin content:", err));
   }, []);
 
-  // PIN validation handler
-  const handlePinSubmit = (e: React.FormEvent) => {
+  // Password validation handler
+  const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pinInput === "7860" || pinInput.toLowerCase() === "bhai786") {
+    const clean = passwordInput.trim().toLowerCase();
+    // Authorized password: bhaijew90
+    if (clean === "bhaijew90") {
       setIsAuthenticated(true);
       sessionStorage.setItem("bhai_admin_auth", "true");
-      setPinError(false);
+      setAuthError(false);
     } else {
-      setPinError(true);
+      setAuthError(true);
     }
   };
 
@@ -187,63 +202,113 @@ export default function AdminDashboardPage() {
     return matchesSearch && matchesType;
   });
 
+  // Slider editing helpers
+  const handleSaveSlide = (slide: PageSlide) => {
+    const existingIndex = siteContent.slides.findIndex((s) => s.id === slide.id);
+    let updatedSlides = [...siteContent.slides];
+    if (existingIndex >= 0) {
+      updatedSlides[existingIndex] = slide;
+    } else {
+      updatedSlides.push(slide);
+    }
+    setSiteContent({ ...siteContent, slides: updatedSlides });
+    setEditingSlide(null);
+    setIsNewSlideModal(false);
+    showToast(`Slide "${slide.title}" saved`);
+  };
+
+  const handleDeleteSlide = (id: string) => {
+    if (confirm("Are you sure you want to remove this slide?")) {
+      setSiteContent({
+        ...siteContent,
+        slides: siteContent.slides.filter((s) => s.id !== id),
+      });
+      showToast("Slide removed");
+    }
+  };
+
   // ----------------------------------------------------
-  // LOGIN SCREEN (PIN PROTECTION)
+  // EXECUTIVE LUXURY LOGIN SCREEN
   // ----------------------------------------------------
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center p-4 relative overflow-hidden">
-        {/* Luxury Glow Background */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-[#dfcca6]/40 via-[#d4af37]/20 to-transparent blur-3xl pointer-events-none rounded-full" />
+      <div className="min-h-screen bg-[#0e1015] flex items-center justify-center p-4 relative overflow-hidden font-sans">
+        {/* Subtle Ambient Gold Atmosphere */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.15)_0%,_transparent_70%)] blur-2xl pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_rgba(25,28,36,0.8)_0%,_#0e1015_100%)] pointer-events-none" />
 
-        <div className="relative w-full max-w-md bg-white/90 backdrop-blur-xl border-2 border-[#dfcca6] rounded-3xl p-8 sm:p-10 shadow-[0_16px_50px_-10px_rgba(139,105,20,0.2)] text-center">
-          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4af37] via-[#f7e799] to-[#aa7c11] rounded-t-3xl" />
+        <div className="relative w-full max-w-sm sm:max-w-md bg-[#161922]/90 backdrop-blur-2xl border border-[#d4af37]/35 rounded-3xl p-7 sm:p-9 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] text-center text-white">
+          {/* Top 24K Gold Accent */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent rounded-t-3xl" />
 
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#faf5ea] to-[#eedbb9] border border-[#d4af37]/60 flex items-center justify-center text-[#8b6914] mx-auto mb-5 shadow-sm">
-            <svg className="w-8 h-8 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="1.8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
+          {/* Emblem Monogram */}
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-b from-[#242016] to-[#16140e] border border-[#d4af37]/50 flex items-center justify-center text-[#d4af37] mx-auto mb-4 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <span className="font-notche font-bold text-2xl tracking-tighter">B</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-notche font-bold text-slate-900 tracking-tight">
-            Bhai Jeweller Admin
+          <h1 className="text-xl sm:text-2xl font-notche font-bold tracking-tight text-white">
+            Bhai Jewellers
           </h1>
-          <p className="text-xs text-stone-500 mt-1 mb-6">
-            Enter authorized master PIN to access showroom management desk.
+          <p className="text-[11px] text-stone-400 mt-1 uppercase tracking-widest font-semibold">
+            Showroom Admin Studio
           </p>
 
-          <form onSubmit={handlePinSubmit} className="space-y-4">
-            <div>
+          <form onSubmit={handlePasswordSubmit} className="mt-7 space-y-4">
+            <div className="relative">
               <input
-                type="password"
-                placeholder="Enter PIN (e.g. 7860)"
-                value={pinInput}
-                onChange={(e) => setPinInput(e.target.value)}
-                className={`w-full px-4 py-3 text-center text-lg font-numbers tracking-widest rounded-xl border ${
-                  pinError ? "border-rose-500 bg-rose-50" : "border-[#dfcca6] bg-[#faf8f5]"
-                } focus:outline-none focus:ring-2 focus:ring-[#8b6914]`}
+                type={showPassword ? "text" : "password"}
+                value={passwordInput}
+                onChange={(e) => {
+                  setPasswordInput(e.target.value);
+                  if (authError) setAuthError(false);
+                }}
+                className={`w-full px-4 py-3.5 pr-11 text-center text-sm font-numbers tracking-widest rounded-xl border ${
+                  authError
+                    ? "border-rose-500/80 bg-rose-950/20 text-rose-300 focus:ring-rose-500"
+                    : "border-stone-700/80 bg-[#1e222d] text-white focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]"
+                } focus:outline-none transition-all`}
                 autoFocus
+                required
               />
-              {pinError && (
-                <p className="text-xs text-rose-500 mt-1.5 font-medium">
-                  Invalid PIN. Hint: Use 7860 or bhai786
-                </p>
-              )}
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 transition-colors cursor-pointer"
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                )}
+              </button>
             </div>
+
+            {authError && (
+              <div className="py-2 px-3 rounded-lg bg-rose-950/60 border border-rose-800/60 text-rose-300 text-xs font-medium animate-in fade-in">
+                Access Denied. Incorrect password.
+              </div>
+            )}
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#7a5d28] via-[#8b6914] to-[#73582a] hover:from-[#664d1f] hover:to-[#5a441e] text-white font-notche font-bold tracking-wider text-sm shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer"
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#8b6914] via-[#b8933b] to-[#73582a] hover:from-[#9c781d] hover:to-[#856631] text-white font-notche font-bold tracking-wider text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all active:scale-[0.98] cursor-pointer"
             >
-              UNLOCK CONTROL PANEL
+              AUTHENTICATE ACCESS
             </button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-stone-100 flex items-center justify-between text-xs text-stone-400">
-            <Link href="/" className="hover:text-[#8b6914] transition-colors">
-              ← Return to Live Website
+          <div className="mt-6 pt-5 border-t border-stone-800/70 flex items-center justify-between text-xs text-stone-500">
+            <Link href="/" className="hover:text-stone-300 transition-colors">
+              ← Return to Site
             </Link>
-            <span className="font-numbers">v2.4 Pro</span>
+            <span className="font-numbers text-[11px] text-stone-600">Secure Core</span>
           </div>
         </div>
       </div>
@@ -281,7 +346,7 @@ export default function AdminDashboardPage() {
                 </span>
               </div>
               <p className="text-[11px] text-stone-500 font-medium">
-                Live Pricing & Showroom Content Management
+                Live Pricing, Sliders & Showroom Content Management
               </p>
             </div>
           </div>
@@ -358,6 +423,20 @@ export default function AdminDashboardPage() {
             <span>🪙 Gold & Silver Bullion</span>
             <span className="font-numbers text-xs bg-black/20 px-1.5 py-0.2 rounded">
               {goldItems.length + silverItems.length}
+            </span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("sliders")}
+            className={`px-4 py-2.5 rounded-xl font-notche font-bold text-xs sm:text-sm tracking-wide transition-all cursor-pointer shrink-0 flex items-center gap-2 ${
+              activeTab === "sliders"
+                ? "bg-[#8b6914] text-white shadow-md"
+                : "bg-white/70 hover:bg-white text-stone-700 border border-[#dfcca6]"
+            }`}
+          >
+            <span>🎠 Page Sliders</span>
+            <span className="font-numbers text-xs bg-black/20 px-1.5 py-0.2 rounded">
+              {siteContent.slides?.length || 0}
             </span>
           </button>
 
@@ -584,7 +663,128 @@ export default function AdminDashboardPage() {
         )}
 
         {/* ======================================================== */}
-        {/* TAB 2: CONTACT & CHANNELS                                */}
+        {/* TAB 2: PAGE SLIDERS & BANNERS                            */}
+        {/* ======================================================== */}
+        {activeTab === "sliders" && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            <div className="bg-white border border-[#dfcca6] rounded-2xl p-5 shadow-2xs flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-notche font-bold text-slate-900">
+                  Page Slides & Featured Showcases
+                </h2>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  Manage the interactive hero slider displayed across the website pages.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIsNewSlideModal(true)}
+                className="px-4 py-2 bg-[#8b6914] hover:bg-[#a67c1e] text-white font-notche font-bold text-xs rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>+</span>
+                <span>Add New Slide</span>
+              </button>
+            </div>
+
+            {/* Slides List */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {siteContent.slides.map((slide, index) => (
+                <div
+                  key={slide.id}
+                  className="bg-white border border-[#dfcca6]/80 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div className="p-4 space-y-3">
+                    {/* Slide Top Details */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold font-numbers bg-stone-100 text-stone-600 px-2 py-0.5 rounded">
+                        Slide #{index + 1}
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = siteContent.slides.map((s) =>
+                            s.id === slide.id ? { ...s, active: !s.active } : s
+                          );
+                          setSiteContent({ ...siteContent, slides: updated });
+                          showToast(`Slide ${slide.active ? "disabled" : "activated"}`);
+                        }}
+                        className={`text-[9.5px] font-bold px-2 py-0.5 rounded cursor-pointer transition-colors ${
+                          slide.active !== false
+                            ? "bg-emerald-100 text-emerald-800"
+                            : "bg-stone-200 text-stone-600"
+                        }`}
+                      >
+                        {slide.active !== false ? "Active on Site" : "Hidden"}
+                      </button>
+                    </div>
+
+                    {/* Image Preview Stage */}
+                    <div className="relative w-full h-36 rounded-xl bg-gradient-to-b from-[#faf6ee] to-[#f4ebd9] border border-[#dfcca6]/50 p-2 flex items-center justify-center overflow-hidden">
+                      <img
+                        src={slide.imageUrl}
+                        alt={slide.title}
+                        className="max-h-full max-w-full object-contain filter drop-shadow-md"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/offers/offer-1.jpg";
+                        }}
+                      />
+                      {slide.tag && (
+                        <span className="absolute top-2 left-2 bg-white/95 text-[#8b6914] text-[9px] font-bold font-notche px-2 py-0.5 rounded border border-[#dfcca6]">
+                          {slide.tag}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div>
+                      <h3 className="font-notche font-bold text-slate-900 text-sm leading-snug line-clamp-1">
+                        {slide.title}
+                      </h3>
+                      <p className="text-xs text-stone-500 line-clamp-2 mt-1 leading-relaxed">
+                        {slide.subtitle}
+                      </p>
+                    </div>
+
+                    <div className="text-[11px] text-stone-400 flex items-center justify-between pt-1 border-t border-stone-100">
+                      <span>CTA: <strong className="text-stone-700">{slide.buttonText || "Discover"}</strong></span>
+                      <span className="truncate max-w-[120px] font-mono">{slide.linkUrl}</span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="p-3 bg-[#faf8f5] border-t border-stone-100 flex items-center justify-between gap-2">
+                    <button
+                      onClick={() => setEditingSlide(slide)}
+                      className="flex-1 py-1.5 px-3 rounded-lg bg-white border border-[#dfcca6] hover:bg-[#8b6914] hover:text-white text-stone-700 font-notche text-xs font-bold transition-all cursor-pointer text-center"
+                    >
+                      EDIT SLIDE
+                    </button>
+
+                    <button
+                      onClick={() => handleDeleteSlide(slide.id)}
+                      className="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                      title="Delete Slide"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {siteContent.slides.length === 0 && (
+              <div className="text-center py-16 bg-white rounded-2xl border border-[#dfcca6]">
+                <p className="text-sm text-stone-500 font-medium">No slides created yet.</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ======================================================== */}
+        {/* TAB 3: CONTACT & CHANNELS                                */}
         {/* ======================================================== */}
         {activeTab === "contact" && (
           <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-200">
@@ -732,7 +932,7 @@ export default function AdminDashboardPage() {
         )}
 
         {/* ======================================================== */}
-        {/* TAB 3: FIND US & STORE HOURS                             */}
+        {/* TAB 4: FIND US & STORE HOURS                             */}
         {/* ======================================================== */}
         {activeTab === "findUs" && (
           <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-200">
@@ -826,7 +1026,7 @@ export default function AdminDashboardPage() {
         )}
 
         {/* ======================================================== */}
-        {/* TAB 4: PRIVACY POLICY                                    */}
+        {/* TAB 5: PRIVACY POLICY                                    */}
         {/* ======================================================== */}
         {activeTab === "privacy" && (
           <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-200">
@@ -984,7 +1184,7 @@ export default function AdminDashboardPage() {
       </main>
 
       {/* ======================================================== */}
-      {/* RICH EDIT BULLION ITEM MODAL WITH LIVE CARD PREVIEW      */}
+      {/* RICH EDIT BULLION ITEM MODAL WITH IMAGE UPLOAD           */}
       {/* ======================================================== */}
       {editingItem && (
         <BullionProductEditorModal
@@ -997,7 +1197,7 @@ export default function AdminDashboardPage() {
       )}
 
       {/* ======================================================== */}
-      {/* ADD NEW BULLION ITEM MODAL                               */}
+      {/* ADD NEW BULLION ITEM MODAL WITH IMAGE UPLOAD             */}
       {/* ======================================================== */}
       {isNewItemModal && (
         <BullionProductEditorModal
@@ -1025,12 +1225,38 @@ export default function AdminDashboardPage() {
           onSave={handleAddBullionItem}
         />
       )}
+
+      {/* ======================================================== */}
+      {/* SLIDE EDITOR MODAL (ADD / EDIT)                          */}
+      {/* ======================================================== */}
+      {(editingSlide || isNewSlideModal) && (
+        <SlideEditorModal
+          initialSlide={
+            editingSlide || {
+              id: `slide-${Date.now()}`,
+              title: "New Showroom Announcement",
+              subtitle: "Exclusive fine jewellery collection and bullion offers in Bradford.",
+              tag: "NEW ARRIVAL",
+              imageUrl: "/offers/offer-1.jpg",
+              linkUrl: "/offers",
+              buttonText: "Discover Now",
+              active: true,
+              order: (siteContent.slides?.length || 0) + 1,
+            }
+          }
+          onClose={() => {
+            setEditingSlide(null);
+            setIsNewSlideModal(false);
+          }}
+          onSave={handleSaveSlide}
+        />
+      )}
     </div>
   );
 }
 
 // ----------------------------------------------------
-// DUAL-PANE PRODUCT EDITOR MODAL (CARD PREVIEW + AUTO-PRICING)
+// DUAL-PANE PRODUCT EDITOR MODAL WITH IMAGE UPLOAD
 // ----------------------------------------------------
 function BullionProductEditorModal({
   initialItem,
@@ -1055,6 +1281,55 @@ function BullionProductEditorModal({
     buttonText: initialItem.buttonText || "Inquire / Lock Price",
     priceMode: initialItem.priceMode || (initialItem.customPriceOverride ? "fixed" : "auto"),
   });
+
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle direct file upload from computer
+  const handleImageFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+
+      // Local preview immediately
+      const localUrl = URL.createObjectURL(file);
+      setFormData((prev) => ({ ...prev, imageUrl: localUrl }));
+
+      const data = new FormData();
+      data.append("file", file);
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: data,
+      });
+
+      const json = await res.json();
+      if (json.success && json.url) {
+        setFormData((prev) => ({ ...prev, imageUrl: json.url }));
+      } else {
+        // Fallback: convert to base64 Data URL
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (reader.result) {
+            setFormData((prev) => ({ ...prev, imageUrl: reader.result as string }));
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    } catch {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result) {
+          setFormData((prev) => ({ ...prev, imageUrl: reader.result as string }));
+        }
+      };
+      reader.readAsDataURL(file);
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   // Calculate live preview price automatically as user changes weight or markup
   const priceInfo = getBullionCalculatedPrice(formData, goldGram, silverGram);
@@ -1101,9 +1376,7 @@ function BullionProductEditorModal({
         {/* Modal Body: 2 Columns on Desktop */}
         <div className="p-5 sm:p-7 overflow-y-auto grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8">
           
-          {/* ======================================================== */}
-          {/* LEFT COLUMN: LIVE VISUAL CARD PREVIEW                    */}
-          {/* ======================================================== */}
+          {/* LEFT COLUMN: LIVE VISUAL CARD PREVIEW */}
           <div className="md:col-span-5 flex flex-col items-center">
             <div className="w-full flex items-center justify-between mb-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 font-notche flex items-center gap-1.5">
@@ -1226,9 +1499,7 @@ function BullionProductEditorModal({
             </div>
           </div>
 
-          {/* ======================================================== */}
-          {/* RIGHT COLUMN: EDIT PRODUCT FORM                          */}
-          {/* ======================================================== */}
+          {/* RIGHT COLUMN: EDIT PRODUCT FORM */}
           <div className="md:col-span-7 space-y-4 text-xs">
             
             {/* PRICING MODE SELECTOR */}
@@ -1365,7 +1636,7 @@ function BullionProductEditorModal({
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
-                  Weight (Grams) — Price Auto Updates
+                  Weight (Grams) — Auto Updates Price
                 </label>
                 <input
                   type="number"
@@ -1391,6 +1662,53 @@ function BullionProductEditorModal({
                   onChange={(e) => setFormData({ ...formData, purity: e.target.value })}
                   className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#8b6914]"
                   placeholder="e.g. 999.9 (24K) or 916.7 (22K)"
+                />
+              </div>
+            </div>
+
+            {/* IMAGE UPLOAD SECTION */}
+            <div className="p-3.5 rounded-2xl border border-[#dfcca6] bg-[#faf8f5] space-y-2.5">
+              <div className="flex items-center justify-between">
+                <label className="block font-bold text-stone-800 uppercase text-[11px]">
+                  Product Image (Upload from Computer or enter URL)
+                </label>
+                {isUploading && (
+                  <span className="text-[10px] text-[#8b6914] font-bold animate-pulse flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#8b6914] animate-ping" />
+                    Uploading...
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleImageFileChange}
+                  accept="image/*"
+                  className="hidden"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="px-4 py-2 rounded-xl bg-white border border-[#dfcca6] hover:bg-[#8b6914] hover:text-white text-stone-800 font-notche font-bold text-xs transition-all shadow-2xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  <span>Choose Photo from Device</span>
+                </button>
+
+                <span className="text-[11px] text-stone-400">or enter link:</span>
+
+                <input
+                  type="text"
+                  value={formData.imageUrl}
+                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                  placeholder="/bullion/gold-bar-1g.webp"
+                  className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 bg-white text-xs font-mono focus:outline-none"
                 />
               </div>
             </div>
@@ -1453,7 +1771,7 @@ function BullionProductEditorModal({
               </div>
             </div>
 
-            {/* BUTTON TEXT & IMAGE URL */}
+            {/* BUTTON TEXT & TYPE */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
@@ -1470,14 +1788,16 @@ function BullionProductEditorModal({
 
               <div>
                 <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
-                  Image URL
+                  Category Type
                 </label>
-                <input
-                  type="text"
-                  value={formData.imageUrl}
-                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#8b6914]"
-                />
+                <select
+                  value={formData.type}
+                  onChange={(e) => setFormData({ ...formData, type: e.target.value as "bar" | "coin" })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none"
+                >
+                  <option value="bar">Bullion Bar</option>
+                  <option value="coin">Bullion Coin</option>
+                </select>
               </div>
             </div>
 
@@ -1534,6 +1854,284 @@ function BullionProductEditorModal({
               {isNew ? "ADD PRODUCT" : "UPDATE PRODUCT CARD"}
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ----------------------------------------------------
+// SLIDE EDITOR MODAL WITH IMAGE UPLOAD
+// ----------------------------------------------------
+function SlideEditorModal({
+  initialSlide,
+  onClose,
+  onSave,
+}: {
+  initialSlide: PageSlide;
+  onClose: () => void;
+  onSave: (slide: PageSlide) => void;
+}) {
+  const [slideData, setSlideData] = useState<PageSlide>(initialSlide);
+  const [isUploading, setIsUploading] = useState(false);
+  const slideFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSlideImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+      const localUrl = URL.createObjectURL(file);
+      setSlideData((prev) => ({ ...prev, imageUrl: localUrl }));
+
+      const data = new FormData();
+      data.append("file", file);
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: data,
+      });
+
+      const json = await res.json();
+      if (json.success && json.url) {
+        setSlideData((prev) => ({ ...prev, imageUrl: json.url }));
+      } else {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (reader.result) {
+            setSlideData((prev) => ({ ...prev, imageUrl: reader.result as string }));
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    } catch {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result) {
+          setSlideData((prev) => ({ ...prev, imageUrl: reader.result as string }));
+        }
+      };
+      reader.readAsDataURL(file);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-xs p-3 sm:p-6 animate-in fade-in overflow-y-auto"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-2xl bg-white rounded-3xl border-2 border-[#dfcca6] shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="h-1.5 bg-gradient-to-r from-[#d4af37] via-[#f7e799] to-[#aa7c11] shrink-0" />
+
+        <div className="px-5 sm:px-7 py-4 border-b border-stone-100 flex items-center justify-between bg-[#faf8f5] shrink-0">
+          <div>
+            <h3 className="font-notche font-bold text-slate-900 text-base sm:text-lg">
+              Slide Editor
+            </h3>
+            <p className="text-xs text-stone-500 mt-0.5">
+              Configure homepage / showcase slide visuals, text, and link.
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center font-bold text-sm transition-colors cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="p-5 sm:p-7 overflow-y-auto space-y-4 text-xs">
+          {/* Live Preview Card */}
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-[#faf6ee] to-[#f4ebd9] border border-[#dfcca6] flex items-center gap-4">
+            <div className="w-24 h-24 rounded-xl bg-white border border-[#dfcca6]/60 p-2 flex items-center justify-center shrink-0 overflow-hidden shadow-xs">
+              <img
+                src={slideData.imageUrl}
+                alt={slideData.title}
+                className="max-h-full max-w-full object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "/offers/offer-1.jpg";
+                }}
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              {slideData.tag && (
+                <span className="text-[9.5px] font-bold font-notche px-2 py-0.5 rounded bg-white text-[#8b6914] border border-[#dfcca6] inline-block mb-1">
+                  {slideData.tag}
+                </span>
+              )}
+              <h4 className="font-notche font-bold text-slate-900 text-sm truncate">
+                {slideData.title || "Untitled Slide"}
+              </h4>
+              <p className="text-[11px] text-stone-600 line-clamp-2 mt-0.5">
+                {slideData.subtitle || "No description provided."}
+              </p>
+              <div className="mt-2 text-[10px] text-[#8b6914] font-bold font-notche flex items-center gap-1">
+                <span>Button: {slideData.buttonText || "Discover"}</span>
+                <span>→</span>
+                <span className="text-stone-400 font-mono font-normal truncate max-w-[150px]">{slideData.linkUrl}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Form fields */}
+          <div>
+            <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
+              Slide Title
+            </label>
+            <input
+              type="text"
+              value={slideData.title}
+              onChange={(e) => setSlideData({ ...slideData, title: e.target.value })}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#8b6914] font-medium"
+              placeholder="e.g. Royal 22K Bridal & Filigree Jewellery"
+            />
+          </div>
+
+          <div>
+            <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
+              Slide Subtitle / Description
+            </label>
+            <textarea
+              rows={2}
+              value={slideData.subtitle}
+              onChange={(e) => setSlideData({ ...slideData, subtitle: e.target.value })}
+              className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#8b6914] leading-relaxed"
+              placeholder="e.g. Handcrafted heirloom bridal sets fresh from our Bradford artisan workshop."
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
+                Tag Badge
+              </label>
+              <input
+                type="text"
+                value={slideData.tag || ""}
+                onChange={(e) => setSlideData({ ...slideData, tag: e.target.value })}
+                className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#8b6914]"
+                placeholder="e.g. SHOWROOM ARRIVALS"
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
+                Display Order
+              </label>
+              <input
+                type="number"
+                value={slideData.order || 1}
+                onChange={(e) => setSlideData({ ...slideData, order: parseInt(e.target.value) || 1 })}
+                className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] font-numbers focus:outline-none focus:ring-1 focus:ring-[#8b6914]"
+              />
+            </div>
+          </div>
+
+          {/* IMAGE UPLOAD SECTION */}
+          <div className="p-3.5 rounded-2xl border border-[#dfcca6] bg-[#faf8f5] space-y-2.5">
+            <div className="flex items-center justify-between">
+              <label className="block font-bold text-stone-800 uppercase text-[11px]">
+                Slide Image (Upload or enter URL)
+              </label>
+              {isUploading && (
+                <span className="text-[10px] text-[#8b6914] font-bold animate-pulse">
+                  Uploading...
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input
+                type="file"
+                ref={slideFileInputRef}
+                onChange={handleSlideImageUpload}
+                accept="image/*"
+                className="hidden"
+              />
+
+              <button
+                type="button"
+                onClick={() => slideFileInputRef.current?.click()}
+                disabled={isUploading}
+                className="px-4 py-2 rounded-xl bg-white border border-[#dfcca6] hover:bg-[#8b6914] hover:text-white text-stone-800 font-notche font-bold text-xs transition-all shadow-2xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                📁 Upload Photo from Device
+              </button>
+
+              <input
+                type="text"
+                value={slideData.imageUrl}
+                onChange={(e) => setSlideData({ ...slideData, imageUrl: e.target.value })}
+                placeholder="/offers/offer-1.jpg"
+                className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 bg-white text-xs font-mono focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
+                Button CTA Text
+              </label>
+              <input
+                type="text"
+                value={slideData.buttonText}
+                onChange={(e) => setSlideData({ ...slideData, buttonText: e.target.value })}
+                className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#8b6914]"
+                placeholder="View Today's Offers"
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-stone-700 mb-1 uppercase text-[11px]">
+                Target Link URL
+              </label>
+              <input
+                type="text"
+                value={slideData.linkUrl}
+                onChange={(e) => setSlideData({ ...slideData, linkUrl: e.target.value })}
+                className="w-full px-3.5 py-2 rounded-xl border border-stone-300 bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#8b6914]"
+                placeholder="/offers or /gold-bars"
+              />
+            </div>
+          </div>
+
+          <div className="pt-1">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={slideData.active !== false}
+                onChange={(e) => setSlideData({ ...slideData, active: e.target.checked })}
+                className="w-4 h-4 text-[#8b6914] rounded cursor-pointer"
+              />
+              <span className="font-bold text-stone-700">Display this slide on website</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="px-5 sm:px-7 py-3.5 border-t border-stone-200 bg-[#faf8f5] flex items-center justify-end gap-2.5 shrink-0">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2 rounded-xl border border-stone-300 text-stone-600 font-semibold text-xs hover:bg-white cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => onSave(slideData)}
+            className="px-6 py-2 rounded-xl bg-gradient-to-r from-[#7a5d28] via-[#8b6914] to-[#73582a] hover:from-[#664d1f] hover:to-[#5a441e] text-white font-notche font-bold text-xs tracking-wider shadow-md hover:shadow-lg transition-all cursor-pointer"
+          >
+            SAVE SLIDE
+          </button>
         </div>
       </div>
     </div>
