@@ -123,3 +123,4 @@ export const INITIAL_SITE_CONTENT: SiteContent = {
     ],
   },
 };
+
